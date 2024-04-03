@@ -1,0 +1,36 @@
+1 - ER Diagram (15) - DONE
+2 - Database Implementation (10) - PARTIAL
+3.1 - HTML, CSS, FRONTEND (30) - PARTIAL
+3.2 - User Interface (15) - X
+4 - PHP, Backend Integration (20) - X
+5 - Demonstration Video (10) - X
+
+Backend integration & frontend can be done parallel
+
+4 pages
+Landing page - center button that takes to Menu
+Cart on top right of every page
+Menu page - categories: starters, main course, side dishes, drinks, desserts
+Order page - 
+Payment page (if card selected) -
+Account history page - 
+Sigup/Login page - 
+
+Website forms -
+
+Order form:-
+
+Menu Items:-
+Pickup/Delivery
+Delivery address - CUSTOMER DETAILS AUTOFILL
+Phone Number - CUSTOMER DETAILS AUTOFILL
+Name - CUSTOMER DETAILS AUTOFILL
+vvv
+Payment form:-
+Price Total
+Method - cash/card
+Card Number
+Expiry Date 
+CVV
+
+Signup form:-
