@@ -1,22 +1,37 @@
-
-
 <?php
 
+include 'connection.php';
+
+function execPreparedStatement($sql, $params) {
+    global $conn;
+    $stmt = $conn->prepare($sql);
+
+    if (!empty($params)) {
+        $stmt->bind_param(str_repeat('s', count($params)), ...$params);
+    }
+
+    $result = $stmt->execute();
+    
+    if ($result) {
+        // If successful, get the result set
+        $result = $stmt->get_result();
+    } else {
+        // If unsuccessful, return false
+        $result = false;
+    }
+
+    // Close the statement
+    $stmt->close();
+
+    // Return the result
+    return $result;
+}
 function createCustomer($user, $pass, $email, $name, $number) {
+    global $conn;
     $sql = "INSERT INTO Customer (Username, Password, Email, Name, PhoneNumber) VALUES (?, ?, ?, ?, ?)";
     $params = [$user, $pass, $email, $name, $number];
 
-    $result = execPreparedStatement($sql, $params);
-
-    echo "<br>";
-
-    if ($result) {
-        echo "<br>";
-        echo "Customer added successfully";
-    }
-    else {
-        echo "Failed to add customer.";
-    }
+    return execPreparedStatement($sql, $params);
 }
 function readCustomer() {
     $sql = "SELECT * FROM Customer";
@@ -26,17 +41,7 @@ function updateCustomer($id, $user, $pass, $email, $name, $number) {
     $sql = "UPDATE Customer SET Username=?, Password=?, Email=?, Name=?, PhoneNumber=? WHERE CustomerID=?";
     $params = [$user, $pass, $email, $name, $number, $id];
     
-    $result = execPreparedStatement($sql, $params);
-    
-    echo "<br>";
-    
-    if ($result) {
-        echo "<br>";
-        echo "Customer UPDATED successfully";
-    }
-    else {
-        echo "Failed to UPDATE customer.";
-    }
+    return execPreparedStatement($sql, $params);
 }
 function deleteCustomer($id) {
     $sql = "DELETE FROM Customer WHERE CustomerID=?";

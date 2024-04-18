@@ -17,11 +17,26 @@ CREATE TABLE Customer (
     CustomerID INT PRIMARY KEY AUTO_INCREMENT,
     Username VARCHAR(30) NOT NULL UNIQUE,
     Password VARCHAR(30) NOT NULL,
-    Email TEXT,
+    Email TEXT NOT NULL UNIQUE,
     Name TEXT,
-    Address VARCHAR(50) NOT NULL,
-    PhoneNumber INT NOT NULL
-);
+    Address VARCHAR(50),
+    PhoneNumber INT UNIQUE
+
+-- email -> not null+unique, phone number unique null
+-- address -> null
+
+-- Set Email column to NOT NULL and UNIQUE
+-- ALTER TABLE Customer
+-- MODIFY Email TEXT NOT NULL UNIQUE;
+
+-- -- Set PhoneNumber column to UNIQUE and allow NULL values
+-- ALTER TABLE Customer
+-- MODIFY PhoneNumber INT UNIQUE;
+
+-- -- Allow Address column to have NULL values
+-- ALTER TABLE Customer
+-- MODIFY Address VARCHAR(50);
+-- );
 
 CREATE TABLE MenuItem (
     ItemID INT PRIMARY KEY AUTO_INCREMENT,
