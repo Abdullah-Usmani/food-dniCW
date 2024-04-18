@@ -10,8 +10,11 @@ function execQuery($sql) {
 $sql = "SELECT * FROM Customer";
 $result = execQuery($sql);
 
+echo "<br>";
+
 if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
+        echo "<br>";
         echo "Customer ID: ".$row["CustomerID"]." - Username: ".$row["Username"]." - Email: ".$row["Email"]."<br>";
     }
 }
