@@ -23,7 +23,7 @@
         <div class="input-group">
           <a href="#" class="forgot-password">Forgot Password?</a>
         </div>
-        <button type="submit" class="login-button">Login</button>
+        <button type="submit" class="login-button" name="login">Login</button>
       </form>
       <p>Don't have an account? <a href="#" class="signup-link">Sign up</a></p>
     </div>
@@ -67,6 +67,7 @@
 </html>
 
 <?php
+session_start(); // Start the session
 
 include 'connection.php';
 include 'functions.php';
@@ -87,5 +88,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
+
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["login"])) {
+    $username = $_POST["login-username"];
+    $password = $_POST["login-password"];
+
+    // Query the database to check for matching record
+    $result = loginCustomer($username, $password);
+
+    if ($result->num_rows == 1) {
+        // Fetch the user ID and store it in a session variable
+        $row = $result->fetch_assoc();
+        $_SESSION["user_id"] = $row["CustomerID"];
+
+        // Redirect to the main menu page or any other page
+        header("Location: menu.php");
+        exit();
+    } else {
+        $error = "Invalid username or password";
+    }
+}
 
 ?>

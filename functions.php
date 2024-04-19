@@ -11,7 +11,7 @@ function execPreparedStatement($sql, $params) {
     }
 
     $result = $stmt->execute();
-    
+
     if ($result) {
         // If successful, get the result set
         $result = $stmt->get_result();
@@ -49,5 +49,11 @@ function deleteCustomer($id) {
     return execPreparedStatement($sql, $params);
 }
 
+function loginCustomer($username, $password) {
+    global $conn;
+    $sql = "SELECT * FROM Customer WHERE Username = ? AND Password = ?";
+    $params = [$username, $password];
+    return execPreparedStatement($sql, $params);
+}
 
 ?>
