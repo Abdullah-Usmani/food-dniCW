@@ -47,3 +47,7 @@ DELETE - menu, customer+order
 
 RESPONSIVE DESIGN
 no need to login, until CART->ORDER->SIGNUP->ORDER->PAYMENT->STATUS
+
+MENU page -> each item should have an add to cart button, then add to session THAT ITEM
+ORDER page should hold SELECTED ITEMS, HOLD THOSE IN A SESSION
+ORDER if only SIGNED UP
