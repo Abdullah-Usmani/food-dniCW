@@ -5,148 +5,267 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Menu - Desi Kitchen</title>
   <link rel="stylesheet" href="menu.css">
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 8px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    .add-to-cart {
+      background-color: #4CAF50;
+      border: none;
+      color: white;
+      padding: 8px 16px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 14px;
+      margin: 4px 2px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+  </style>
 </head>
 <body>
   <header>
-    <h1>Menu</h1>
+    <div class="container">
+      <h1><a href="#">Desi Kitchen</a></h1>
+      <nav>
+        <ul>
+          <li><a href="#appetizers">Appetizers</a></li>
+          <li><a href="#our_special">Our Special</a></li>
+          <li><a href="#grills">Grills</a></li>
+          <li><a href="#handis">Handis</a></li>
+          <li><a href="#rice">Rice</a></li>
+          <li><a href="#sweets">Sweets</a></li>
+          <li><a href="#drinks">Drinks</a></li>
+        </ul>
+      </nav>
+    </div>
   </header>
-  <table>
-    <tr>
-        <th>ID</th>
-        <th>User</th>
-        <th>Pass</th>
-        <th>Name</th>
-    </tr>
+
+  <section class="category" id="appetizers">
+    <div class="container">
     <?php
         
     include 'connection.php';
     include 'functions.php';
 
-    $result = readCustomer();
+    $result = readMenuItem();
     if ($result !== false && $result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
+            echo "<table>";
             echo "<tr>";
-            echo "<td>" . $row["CustomerID"] ."</td>";
-            echo "<td> <a>Update</a> </td>";
-            echo "<td> <a onclick='return confirm(\"Are you sure you want to delete this record?\")'>Delete</a> </td>";
-            echo "<td>" . $row["Username"] ."</td>";
-            echo "<td>" . $row["Password"] ."</td>";
-            echo "<td>" . $row["Name"] ."</td>";
-            echo "</tr>";
+            echo "<td>" . $row["ItemID"] ."</td>";
+            echo "<td>" . $row["ItemName"] ."</td>";
+            echo "<td>" . $row["Description"] ."</td>";
+            echo "<td>" . $row["Price"] ."</td>";
+            echo "<td><button class=\"add-to-cart\">+</button></td>";            echo "</tr>";
+            echo "</table>";
         }
     }
     else {
         echo "<tr><t colspan='4'> No records found. </t></tr>";
     }
     ?>
-    </table>
-  <section class="category" id="appetizers">
-    <h2>Appetizers</h2>
-    <div class="dish">
-        <img src="appetizer1.jpg" alt="Appetizer 1">
-        <h3>Appetizer 1</h3>
-        <p>$5.99</p>
+      <h2>Appetizers</h2>
+      <table>
+        <tr>
+          <th>Item</th>
+          <th>Price</th>
+          <th>Action</th>
+        </tr>
+        <tr>
+          <td>Appetizer 1</td>
+          <td>$5.99</td>
+          <td><button class="add-to-cart">+</button></td>
+        </tr>
+        <tr>
+          <td>Appetizer 2</td>
+          <td>$6.99</td>
+          <td><button class="add-to-cart">+</button></td>
+        </tr>
+        <!-- Add more dishes as needed -->
+      </table>
     </div>
-    <div class="dish">
-        <img src="appetizer2.jpg" alt="Appetizer 2">
-        <h3>Appetizer 2</h3>
-        <p>$6.99</p>
-    </div>
-    <!-- Add more dishes as needed -->
-  </section>
-  
-  <section class="category" id="our_special">
-    <h2>Our Special</h2>
-    <div class="dish">
-        <img src="special1.jpg" alt="Special 1">
-        <h3>Special 1</h3>
-        <p>$12.99</p>
-    </div>
-    <div class="dish">
-        <img src="special2.jpg" alt="Special 2">
-        <h3>Special 2</h3>
-        <p>$14.99</p>
-    </div>
-    <!-- Add more dishes as needed -->
-  </section>
-  
-  <section class="category" id="grills">
-    <h2>Grills</h2>
-    <div class="dish">
-        <img src="grill1.jpg" alt="Grill 1">
-        <h3>Grill 1</h3>
-        <p>$10.99</p>
-    </div>
-    <div class="dish">
-        <img src="grill2.jpg" alt="Grill 2">
-        <h3>Grill 2</h3>
-        <p>$11.99</p>
-    </div>
-    <!-- Add more dishes as needed -->
-  </section>
-  
-  <section class="category" id="handis">
-    <h2>Handis</h2>
-    <div class="dish">
-        <img src="handi1.jpg" alt="Handi 1">
-        <h3>Handi 1</h3>
-        <p>$9.99</p>
-    </div>
-    <div class="dish">
-        <img src="handi2.jpg" alt="Handi 2">
-        <h3>Handi 2</h3>
-        <p>$10.99</p>
-    </div>
-    <!-- Add more dishes as needed -->
-  </section>
-  
-  <section class="category" id="rice">
-    <h2>Rice</h2>
-    <div class="dish">
-        <img src="rice1.jpg" alt="Rice 1">
-        <h3>Rice 1</h3>
-        <p>$4.99</p>
-    </div>
-    <div class="dish">
-        <img src="rice2.jpg" alt="Rice 2">
-        <h3>Rice 2</h3>
-        <p>$5.99</p>
-    </div>
-    <!-- Add more dishes as needed -->
-  </section>
-  
-  <section class="category" id="sweets">
-    <h2>Sweets</h2>
-    <div class="dish">
-        <img src="sweet1.jpg" alt="Sweet 1">
-        <h3>Sweet 1</h3>
-        <p>$3.99</p>
-    </div>
-    <div class="dish">
-        <img src="sweet2.jpg" alt="Sweet 2">
-        <h3>Sweet 2</h3>
-        <p>$4.99</p>
-    </div>
-    <!-- Add more dishes as needed -->
-  </section>
-  
-  <section class="category" id="drinks">
-    <h2>Drinks</h2>
-    <div class="dish">
-        <img src="drink1.jpg" alt="Drink 1">
-        <h3>Drink 1</h3>
-        <p>$1.99</p>
-    </div>
-    <div class="dish">
-        <img src="drink2.jpg" alt="Drink 2">
-        <h3>Drink 2</h3>
-        <p>$2.99</p>
-    </div>
-    <!-- Add more dishes as needed -->
   </section>
 
+  <section class="category" id="our_special">
+    <div class="container">
+      <h2>Our Special</h2>
+      <table>
+        <tr>
+          <th>Item</th>
+          <th>Price</th>
+          <th>Action</th>
+        </tr>
+        <tr>
+          <td>Special 1</td>
+          <td>$12.99</td>
+          <td><button class="add-to-cart">+</button></td>
+        </tr>
+        <tr>
+          <td>Special 2</td>
+          <td>$14.99</td>
+          <td><button class="add-to-cart">+</button></td>
+        </tr>
+        <!-- Add more dishes as needed -->
+      </table>
+    </div>
+  </section>
+
+  <!-- Add sections for other categories -->
+  
+  <!-- <section class="category" id="grills">
+    <div class="container">
+      <h2>Grills</h2>
+      <table>
+        <tr>
+          <th>Item</th>
+          <th>Price</th>
+          <th>Action</th>
+        </tr>
+        <tr>
+          <td>Grill 1</td>
+          <td>$10.99</td>
+          <td><button class="add-to-cart">+</button></td>
+        </tr>
+        <tr>
+          <td>Grill 2</td>
+          <td>$11.99</td>
+          <td><button class="add-to-cart">+</button></td>
+        </tr>
+      </table>
+    </div>
+  </section>
+
+  <section class="category" id="handis">
+    <div class="container">
+      <h2>Handis</h2>
+      <table>
+        <tr>
+          <th>Item</th>
+          <th>Price</th>
+          <th>Action</th>
+        </tr>
+        <tr>
+          <td>Handi 1</td>
+          <td>$9.99</td>
+          <td><button class="add-to-cart">+</button></td>
+        </tr>
+        <tr>
+          <td>Handi 2</td>
+          <td>$10.99</td>
+          <td><button class="add-to-cart">+</button></td>
+        </tr>
+      </table>
+    </div>
+  </section>
+
+  <section class="category" id="rice">
+    <div class="container">
+      <h2>Rice</h2>
+      <table>
+        <tr>
+          <th>Item</th>
+          <th>Price</th>
+          <th>Action</th>
+        </tr>
+        <tr>
+          <td>Rice 1</td>
+          <td>$4.99</td>
+          <td><button class="add-to-cart">+</button></td>
+        </tr>
+        <tr>
+          <td>Rice 2</td>
+          <td>$5.99</td>
+          <td><button class="add-to-cart">+</button></td>
+        </tr>
+      </table>
+    </div>
+  </section>
+
+  <section class="category" id="sweets">
+    <div class="container">
+      <h2>Sweets</h2>
+      <table>
+        <tr>
+          <th>Item</th>
+          <th>Price</th>
+          <th>Action</th>
+        </tr>
+        <tr>
+          <td>Sweet 1</td>
+          <td>$3.99</td>
+          <td><button class="add-to-cart">+</button></td>
+        </tr>
+        <tr>
+          <td>Sweet 2</td>
+          <td>$4.99</td>
+          <td><button class="add-to-cart">+</button></td>
+        </tr>
+      </table>
+    </div>
+  </section>
+
+  <section class="category" id="drinks">
+    <div class="container">
+      <h2>Drinks</h2>
+      <table>
+        <tr>
+          <th>Item</th>
+          <th>Price</th>
+          <th>Action</th>
+        </tr>
+        <tr>
+          <td>Drink 1</td>
+          <td>$1.99</td>
+          <td><button class="add-to-cart">+</button></td>
+        </tr>
+        <tr>
+          <td>Drink 2</td>
+          <td>$2.99</td>
+          <td><button class="add-to-cart">+</button></td>
+        </tr>
+      </table>
+    </div>
+  </section> -->
+
   <footer>
-    <p>© 2024 Desi Kitchen. All rights reserved.</p>
+    <div class="container">
+      <p>© 2024 Desi Kitchen. All rights reserved.</p>
+    </div>
   </footer>
+
+  <div id="menu-popup">
+    <ul>
+      <li><a href="#appetizers">Appetizers</a></li>
+      <li><a href="#our_special">Our Special</a></li>
+      <li><a href="#grills">Grills</a></li>
+      <li><a href="#handis">Handis</a></li>
+      <li><a href="#rice">Rice</a></li>
+      <li><a href="#sweets">Sweets</a></li>
+      <li><a href="#drinks">Drinks</a></li>
+    </ul>
+  </div>
+
+  <script>
+    window.onscroll = function() {scrollFunction()};
+
+    function scrollFunction() {
+      if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        document.getElementById("menu-popup").classList.add("show-popup");
+      } else {
+        document.getElementById("menu-popup").classList.remove("show-popup");
+      }
+    }
+  </script>
 </body>
 </html>

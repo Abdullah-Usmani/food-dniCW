@@ -56,4 +56,29 @@ function loginCustomer($username, $password) {
     return execPreparedStatement($sql, $params);
 }
 
+// MENU STUFF
+function createMenuItem($name, $desc, $url, $price, $status) {
+    global $conn;
+    $sql = "UPDATE MenuItem SET Username=?, Password=?, Email=?, Name=?, PhoneNumber=? WHERE MenuItemID=?";
+    $params = [$name, $desc, $url, $price, $status];
+
+    return execPreparedStatement($sql, $params);
+}
+function readMenuItem() {
+    $sql = "SELECT * FROM MenuItem";
+    return execPreparedStatement($sql, []);
+}
+function updateMenuItem($id, $name, $desc, $url, $price, $status) {
+    global $conn;
+    $sql = "UPDATE MenuItem SET ItemName=?, Description=?, ImageURL=?, Price=?, AvailabilityStatus=? WHERE ItemID=?";
+    $params = [$name, $desc, $url, $price, $status];
+
+    return execPreparedStatement($sql, $params);
+}
+function deleteMenuItem($id) {
+    $sql = "DELETE FROM MenuItem WHERE MenuItemID=?";
+    $params = [$id];
+    return execPreparedStatement($sql, $params);
+}
+
 ?>
