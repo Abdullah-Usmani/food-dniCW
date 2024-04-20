@@ -96,10 +96,7 @@ function readMenuCategories() {
 function readMenuItemByCategories() {
     global $conn;
     // SQL query to retrieve menu items grouped by categories
-    $sql = "SELECT mc.CategoryName, mi.ItemName, mi.Description, mi.Price
-            FROM MenuCategory mc
-            INNER JOIN MenuItem mi ON mc.CategoryID = mi.CategoryID
-            ORDER BY mc.CategoryName";
+    $sql = "SELECT * FROM MenuItem WHERE MenuItem";
 
     return execPreparedStatement($sql, []);
 }
