@@ -9,12 +9,12 @@ Backend integration & frontend can be done parallel
 
 4 pages
 Landing page - center button that takes to Menu
+Sigup/Login page - 
 Cart on top right of every page
 Menu page - categories: starters, main course, side dishes, drinks, desserts
 Order page - 
 Payment page (if card selected) -
 Account history page - 
-Sigup/Login page - 
 
 Website forms -
 
@@ -34,3 +34,20 @@ Expiry Date
 CVV
 
 Signup form:-
+
+
+THINGS TO IMPLEMENT WITH BACKEND)
+LOGIN PAGE
+FORGOT PASSWORD
+LOGGED IN USER - ID CARRIED FORWARD/STORED for ORDER & PAYMENT
+CREATE - customer, order, menu, 
+READ - menu, order, customer, 
+UPDATE - menu, customer
+DELETE - menu, customer+order
+
+RESPONSIVE DESIGN
+no need to login, until CART->ORDER->SIGNUP->ORDER->PAYMENT->STATUS
+
+MENU page -> each item should have an add to cart button, then add to session THAT ITEM
+ORDER page should hold SELECTED ITEMS, HOLD THOSE IN A SESSION
+ORDER if only SIGNED UP
