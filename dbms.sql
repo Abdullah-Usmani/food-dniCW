@@ -20,7 +20,7 @@ CREATE TABLE Customer (
     Email TEXT NOT NULL UNIQUE,
     Name TEXT,
     Address VARCHAR(50),
-    PhoneNumber INT UNIQUE
+    PhoneNumber INT UNIQUE);
 
 -- email -> not null+unique, phone number unique null
 -- address -> null
@@ -36,21 +36,23 @@ CREATE TABLE Customer (
 -- -- Allow Address column to have NULL values
 -- ALTER TABLE Customer
 -- MODIFY Address VARCHAR(50);
--- );
-
-CREATE TABLE MenuItem (
-    ItemID INT PRIMARY KEY AUTO_INCREMENT,
-    ItemName VARCHAR(30) NOT NULL,
-    Description TEXT,
-    ImageURL TEXT,
-    Price REAL NOT NULL DEFAULT 2.50,
-    AvailabilityStatus BOOLEAN NOT NULL DEFAULT 0
-);
-
+--
 CREATE TABLE MenuCategory (
     CategoryID INT PRIMARY KEY AUTO_INCREMENT,
     CategoryName VARCHAR(30) NOT NULL DEFAULT 'Unspecified'
 );
+
+CREATE TABLE MenuItem (
+    ItemID INT PRIMARY KEY AUTO_INCREMENT,
+    CategoryID INT NOT NULL,
+    ItemName VARCHAR(30) NOT NULL,
+    Description TEXT,
+    ImageURL TEXT,
+    Price REAL NOT NULL DEFAULT 2.50,
+    AvailabilityStatus BOOLEAN NOT NULL DEFAULT 0,
+    FOREIGN KEY (CategoryID) REFERENCES MenuCategory(CategoryID)
+);
+
 
 --RENAME TABLE - can't use ORDER, changed to ORDERS NOW
 --OrderStatus = delivered yes/no
@@ -63,14 +65,16 @@ CREATE TABLE Orders (
     FOREIGN KEY (CustomerID) REFERENCES Customer(CustomerID)
 );
 CREATE TABLE Payment (
-    OrderID INT PRIMARY KEY AUTO_INCREMENT,
+    PaymentID INT PRIMARY KEY AUTO_INCREMENT,
+    OrderID INT NOT NULL,
     CustomerID INT NOT NULL,
     OrderDateTime DATETIME NOT NULL,
     Price REAL NOT NULL DEFAULT 0.00,
     OrderStatus BOOLEAN NOT NULL DEFAULT 0,
+    FOREIGN KEY (OrderID) REFERENCES Orders(OrderID),
     FOREIGN KEY (CustomerID) REFERENCES Customer(CustomerID)
-
 );
+
 -- default price for items
 -- RENAME to ITEM
 -- ADD STOCK COLUMN, HOW MANY OF THESE ITEMS AVAILIABLE?
