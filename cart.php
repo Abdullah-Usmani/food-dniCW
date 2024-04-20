@@ -48,7 +48,14 @@ $totalAmount = $subTotal + $tax + $shippingCost;
 </head>
 <body>
   <div class="cart-page">
-    <h1>My Cart</h1>
+  <div class="header">
+      <h1>My Cart</h1>
+      <div class="header-buttons">
+        <button id="view-cart-button" class="header-button">View Cart</button>
+        <button id="main-menu-button" class="header-button">Main Menu</button>
+        <button id="order-status-button" class="header-button">Order Status</button>
+      </div>
+    </div>
     <div class="cart-items">
     <?php
       // Display cart items
@@ -97,10 +104,26 @@ $totalAmount = $subTotal + $tax + $shippingCost;
         <p>Total Amount: $<?php echo number_format($totalAmount, 2); ?></p>
       </div>
       <p class="message" style="display:none;"></p>
-      <button id="pay-now-button" class="pay-button">Pay Now</button>
+      <button id="pay-now-button" class="pay-button" onclick="payNow()">Pay Now</button>
     </div>
   </div>
 
   <script src="cart.js"></script>
+  <script>
+    function payNow() {
+      const phone = document.getElementById("phone").value;
+      const location = document.getElementById("location").value;
+      
+      if (!phone || !location) {
+        const messageElement = document.querySelector(".message");
+        messageElement.textContent = "Please fill out all fields!";
+        messageElement.style.display = "block";
+      } else {
+        // Proceed with payment process
+        // For demonstration purposes, alerting the values
+        alert(`Phone Number: ${phone}\nAddress: ${location}`);
+      }
+    }
+  </script>
 </body>
 </html>
