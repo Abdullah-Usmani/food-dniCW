@@ -34,7 +34,7 @@
         <label for="cvv">CVV</label>
         <input type="text" id="cvv" name="cvv" maxlength="3" required>
       </div>
-      <button type="submit" class="pay-button">Pay Now</button>
+      <button id="view-cart-button" class="header-button" onclick="location.href='payment.php'">Pay now</button>
     </form>
   </div>
 </body>
