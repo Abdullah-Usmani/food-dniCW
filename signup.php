@@ -23,7 +23,7 @@
         <div class="input-group">
           <a href="#" class="forgot-password">Forgot Password?</a>
         </div>
-        <button type="submit" class="login-button">Login</button>
+        <button type="submit" class="login-button" name="login">Login</button>
       </form>
       <p>Don't have an account? <a href="#" class="signup-link">Sign up</a></p>
     </div>
