@@ -23,7 +23,7 @@
         <div class="input-group">
           <a href="#" class="forgot-password">Forgot Password?</a>
         </div>
-        <button type="submit" class="login-button" name="login">Login</button>
+        <button type="submit" class="login-button">Login</button>
       </form>
       <p>Don't have an account? <a href="#" class="signup-link">Sign up</a></p>
     </div>
@@ -67,6 +67,7 @@
 </html>
 
 <?php
+
 session_start(); // Start the session
 
 include 'connection.php';
@@ -87,8 +88,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "Failed to add customer" . $conn->error;
     }
 }
-
-
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["login"])) {
     $username = $_POST["login-username"];
