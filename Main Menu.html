@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menu - Desi Kitchen</title>
+  <link rel="stylesheet" href="menu.css">
+  <style>
+    /* Your existing CSS styles */
+    header {
+      background-color: #f2f2f2;
+      padding: 10px 0;
+    }
+    .container {
+      width: 90%;
+      margin: 0 auto;
+    }
+    .header-buttons {
+      text-align: right;
+    }
+    .header-buttons button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      margin: 0 5px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header Section -->
+  <header>
+    <div class="container">
+      <div class="header-buttons">
+        <button onclick="location.href='main-menu.html'">Main Menu</button>
+        <button onclick="location.href='cart.html'">Cart</button>
+        <button onclick="location.href='order-status.html'">Order Status</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Existing Content (Menu Sections) -->
+  <header>
+    <div class="container">
+      <h1><a href="#">Desi Kitchen</a></h1>
+      <nav>
+        <ul>
+          <li><a href="#appetizers">Appetizers</a></li>
+          <li><a href="#our_special">Our Special</a></li>
+          <li><a href="#grills">Grills</a></li>
+          <li><a href="#handis">Handis</a></li>
+          <li><a href="#rice">Rice</a></li>
+          <li><a href="#sweets">Sweets</a></li>
+          <li><a href="#drinks">Drinks</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Existing Content (Menu Sections) -->
+  <section class="category" id="appetizers">
+    <div class="container">
+      <h2>Appetizers</h2>
+      <table>
+        <tr>
+          <th>Item</th>
+          <th>Price</th>
+          <th>Action</th>
+        </tr>
+        <tr>
+          <td>Appetizer 1</td>
+          <td>$5.99</td>
+          <td><button class="add-to-cart">+</button></td>
+        </tr>
+        <tr>
+          <td>Appetizer 2</td>
+          <td>$6.99</td>
+          <td><button class="add-to-cart">+</button></td>
+        </tr>
+        <!-- Add more dishes as needed -->
+      </table>
+    </div>
+  </section>
+
+  <!-- Add sections for other categories -->
+  
+  <section class="category" id="grills">
+    <div class="container">
+      <h2>Grills</h2>
+      <table>
+        <tr>
+          <th>Item</th>
+          <th>Price</th>
+          <th>Action</th>
+        </tr>
+        <tr>
+          <td>Grill 1</td>
+          <td>$10.99</td>
+          <td><button class="add-to-cart">+</button></td>
+        </tr>
+        <tr>
+          <td>Grill 2</td>
+          <td>$11.99</td>
+          <td><button class="add-to-cart">+</button></td>
+        </tr>
+        <!-- Add more dishes as needed -->
+      </table>
+    </div>
+  </section>
+
+  <section class="category" id="handis">
+    <div class="container">
+      <h2>Handis</h2>
+      <table>
+        <tr>
+          <th>Item</th>
+          <th>Price</th>
+          <th>Action</th>
+        </tr>
+        <tr>
+          <td>Handi 1</td>
+          <td>$9.99</td>
+          <td><button class="add-to-cart">+</button></td>
+        </tr>
+        <tr>
+          <td>Handi 2</td>
+          <td>$10.99</td>
+          <td><button class="add-to-cart">+</button></td>
+        </tr>
+        <!-- Add more dishes as needed -->
+      </table>
+    </div>
+  </section>
+
+  <section class="category" id="rice">
+    <div class="container">
+      <h2>Rice</h2>
+      <table>
+        <tr>
+          <th>Item</th>
+          <th>Price</th>
+          <th>Action</th>
+        </tr>
+        <tr>
+          <td>Rice 1</td>
+          <td>$4.99</td>
+          <td><button class="add-to-cart">+</button></td>
+        </tr>
+        <tr>
+          <td>Rice 2</td>
+          <td>$5.99</td>
+          <td><button class="add-to-cart">+</button></td>
+        </tr>
+        <!-- Add more dishes as needed -->
+      </table>
+    </div>
+  </section>
+
+  <section class="category" id="sweets">
+    <div class="container">
+      <h2>Sweets</h2>
+      <table>
+        <tr>
+          <th>Item</th>
+          <th>Price</th>
+          <th>Action</th>
+        </tr>
+        <tr>
+          <td>Sweet 1</td>
+          <td>$3.99</td>
+          <td><button class="add-to-cart">+</button></td>
+        </tr>
+        <tr>
+          <td>Sweet 2</td>
+          <td>$4.99</td>
+          <td><button class="add-to-cart">+</button></td>
+        </tr>
+        <!-- Add more dishes as needed -->
+      </table>
+    </div>
+  </section>
+
+  <section class="category" id="drinks">
+    <div class="container">
+      <h2>Drinks</h2>
+      <table>
+        <tr>
+          <th>Item</th>
+          <th>Price</th>
+          <th>Action</th>
+        </tr>
+        <tr>
+          <td>Drink 1</td>
+          <td>$1.99</td>
+          <td><button class="add-to-cart">+</button></td>
+        </tr>
+        <tr>
+          <td>Drink 2</td>
+          <td>$2.99</td>
+          <td><button class="add-to-cart">+</button></td>
+        </tr>
+        <!-- Add more dishes as needed -->
+      </table>
+    </div>
+  </section>
+
+  <!-- Footer and Menu Popup -->
+  <footer>
+    <div class="container">
+      <p>© 2024 Desi Kitchen. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <div id="menu-popup">
+    <ul>
+      <li><a href="#appetizers">Appetizers</a></li>
+      <li><a href="#our_special">Our Special</a></li>
+      <li><a href="#grills">Grills</a></li>
+      <li><a href="#handis">Handis</a></li>
+      <li><a href="#rice">Rice</a></li>
+      <li><a href="#sweets">Sweets</a></li>
+      <li><a href="#drinks">Drinks</a></li>
+    </ul>
+  </div>
+
+  <script>
+    window.onscroll = function() {scrollFunction()};
+
+    function scrollFunction() {
+      if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        document.getElementById("menu-popup").classList.add("show-popup");
+      } else {
+        document.getElementById("menu-popup").classList.remove("show-popup");
+      }
+    }
+  </script>
+</body>
+</html>
