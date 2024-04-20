@@ -1,43 +1,3 @@
-<?php
-session_start(); // Start or resume a session
-
-// Initialize variables for subtotal and total amount
-$subTotal = 0;
-$taxRate = 0.10; // Assuming 10% tax rate
-$shippingCost = 5; // Assuming a fixed shipping cost
-$totalAmount = 0;
-
-// Check if the cart session variable exists
-if(isset($_SESSION['cart'])) {
-    // Initialize an array to store unique item IDs and their quantities
-    $uniqueItems = array();
-    
-    // Iterate over each item in the cart
-    foreach($_SESSION['cart'] as $item) {
-        // Add the item to the uniqueItems array or update its quantity
-        $itemID = $item['ItemID'];
-        if(isset($uniqueItems[$itemID])) {
-            $uniqueItems[$itemID]['Quantity']++;
-        } else {
-            $uniqueItems[$itemID] = array(
-                'ItemName' => $item['ItemName'],
-                'Price' => $item['Price'],
-                'Quantity' => 1
-            );
-        }
-        
-        // Calculate the subtotal for each item (price * quantity)
-        $subTotal += $item['Price'];
-    }
-}
-
-// Calculate tax amount
-$tax = $subTotal * $taxRate;
-
-// Calculate total amount (subtotal + tax + shipping)
-$totalAmount = $subTotal + $tax + $shippingCost;
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -48,16 +8,16 @@ $totalAmount = $subTotal + $tax + $shippingCost;
 </head>
 <body>
   <div class="cart-page">
-  <div class="header">
+    <div class="header">
       <h1>My Cart</h1>
-        <div class="header-buttons">
-          <button id="view-cart-button" class="header-button" onclick="location.href='cart.php'">View Cart</button>
-          <button id="main-menu-button" class="header-button" onclick="location.href='menu.php'">Main Menu</button>
-          <button id="order-status-button" class="header-button" onclick="location.href='status.php'">Order Status</button>
-        </div>
+      <div class="header-buttons">
+        <button id="view-cart-button" class="header-button" onclick="location.href='cart.php'">View Cart</button>
+        <button id="main-menu-button" class="header-button" onclick="location.href='menu.php'">Main Menu</button>
+        <button id="order-status-button" class="header-button" onclick="location.href='status.php'">Order Status</button>
+      </div>
     </div>
-    <div class="cart-items">
-    <?php
+    <div class="cart-items" id="cart-items">
+      <?php
       // Display cart items
       if(isset($_SESSION['cart'])) {
           foreach($uniqueItems as $itemID => $item) {
@@ -76,54 +36,48 @@ $totalAmount = $subTotal + $tax + $shippingCost;
           echo '<p>Your cart is empty.</p>';
           echo '</div>';
       }
-    ?>
+      ?>
     </div>
     <div class="user-info">
         <label for="phone">Phone Number:</label>
         <input type="text" id="phone" name="phone">
         <label for="location">Address:</label>
         <input type="text" id="location" name="location">
-      </div>
+    </div>
 
     <!-- Summary -->
-    <div class="cart-summary">
-      <h2>Cart Summary</h2>
-      <div class="summary-details">
-        <p>Total Items: <?php echo count($_SESSION['cart'] ?? []); ?></p>
-        <p>Subtotal: $<?php echo number_format($subTotal, 2); ?></p>
-        <p>Tax (<?php echo ($taxRate * 100); ?>%): $<?php echo number_format($tax, 2); ?></p>
-        <p>Shipping Cost: $<?php echo number_format($shippingCost, 2); ?></p>
-        <div class="payment-method">
-          <label for="payment-options">Payment Method:</label>
-          <select id="payment-options">
-            <option value="cash">Cash</option>
-            <option value="credit-debit">Credit/Debit Card</option>
-            <option value="tng">Touch 'n Go</option>
-          </select>
-        </div>
-        <p>Total Amount: $<?php echo number_format($totalAmount, 2); ?></p>
-      </div>
-    <p class="message" style="display:none;"></p>
-      <button id="view-cart-button" class="header-button" onclick="location.href='payment.php'">Pay now</button>
+    <div class="cart-summary" id="cart-summary">
+      <?php
+        // Display cart summary
+        if(isset($_SESSION['cart'])) {
+            echo '<h2>Cart Summary</h2>';
+            echo '<div class="summary-details">';
+            echo '<p>Total Items: ' . count($_SESSION['cart']) . '</p>';
+            echo '<p>Subtotal: $' . number_format($subTotal, 2) . '</p>';
+            echo '<p>Tax (' . ($taxRate * 100) . '%): $' . number_format($tax, 2) . '</p>';
+            echo '<p>Shipping Cost: $' . number_format($shippingCost, 2) . '</p>';
+            echo '<div class="payment-method">';
+            echo '<label for="payment-options">Payment Method:</label>';
+            echo '<select id="payment-options">';
+            echo '<option value="cash">Cash</option>';
+            echo '<option value="credit-debit">Credit/Debit Card</option>';
+            echo '<option value="tng">Touch \'n Go</option>';
+            echo '</select>';
+            echo '</div>';
+            echo '<p>Total Amount: $' . number_format($totalAmount, 2) . '</p>';
+            echo '</div>';
+        } else {
+            // Display message if cart is empty
+            echo '<div class="cart-item">';
+            echo '<p>Your cart is empty.</p>';
+            echo '</div>';
+        }
+      ?>
+      <p class="message" style="display:none;"></p>
+      <button id="pay-now-button" class="pay-button">Pay Now</button>
     </div>
   </div>
 
   <script src="cart.js"></script>
-  <script>
-    function payNow() {
-      const phone = document.getElementById("phone").value;
-      const location = document.getElementById("location").value;
-      
-      if (!phone || !location) {
-        const messageElement = document.querySelector(".message");
-        messageElement.textContent = "Please fill out all fields!";
-        messageElement.style.display = "block";
-      } else {
-        // Proceed with payment process
-        // For demonstration purposes, alerting the values
-        alert(`Phone Number: ${phone}\nAddress: ${location}`);
-      }
-    }
-  </script>
 </body>
 </html>
