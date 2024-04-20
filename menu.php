@@ -1,3 +1,8 @@
+<?php
+include 'connection.php';
+include 'functions.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -69,52 +74,76 @@
     </div>
     <div class="container">
       <h1><a href="#">Desi Kitchen</a></h1>
-      <nav>
-        <ul>
-          <li><a href="#appetizers">Appetizers</a></li>
-          <!-- Add links for other categories -->
-        </ul>
-      </nav>
     </div>
   </header>
 
-  <section class="category" id="appetizers">
-    <div class="container">
-      <h2>Appetizers</h2>
-      <table>
-        <tr>
-          <th>Item</th>
-          <th>Price</th>
-          <th>Action</th>
-        </tr>
-        <?php
-        
-        include 'connection.php';
-        include 'functions.php';
-    
-        $result = readMenuItem();
-        if ($result !== false && $result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-                echo "<table>";
-                echo "<tr>";
-                echo "<td>" . $row["ItemID"] ."</td>";
-                echo "<td>" . $row["ItemName"] ."</td>";
-                echo "<td>" . $row["Description"] ."</td>";
-                echo "<td>" . $row["Price"] ."</td>";
-                echo "<td><button class=\"add-to-cart\" data-ItemID=\"" . $row["ItemID"] . "\" data-ItemName=\"" . $row["ItemName"] . "\" data-Price=\"" . $row["Price"] . "\">+</button></td>";
-                echo "</table>";
-            }
-        }
-        else {
-            echo "<tr><t colspan='4'> No records found. </t></tr>";
-        }
-        ?>
-        <!-- Add more dishes as needed -->
-      </table>
-    </div>
-  </section>
+  <?php
+  // Fetch all menu categories
+  $categories = readMenuCategories();
 
-  <!-- Add sections for other categories -->
+  // if $row['CategoryID'] == $category['CategoryID'];
+  // Check if categories exist
+  if ($categories !== false && $categories->num_rows > 0) {
+      // Loop through each category
+      while ($category = $categories->fetch_assoc()) {
+          echo "<section class='category' id='" . $category['CategoryName'] . "'>";
+          echo "<div class='container'>";
+          echo "<h2>" . $category['CategoryName'] . "</h2>";
+          echo "<table>";
+          echo "<tr>";
+          echo "<th>Item</th>";
+          echo "<th>Price</th>";
+          echo "<th>Action</th>";
+          echo "</tr>";
+
+          // Fetch items for the current category
+          $result = readMenuItem();
+          if ($result !== false && $result->num_rows > 0) {
+              while ($row = $result->fetch_assoc()) {
+                  if ($row["CategoryID"] == $category["CategoryID"]) {
+                    echo "<table>";
+                    echo "<tr>";
+                    echo "<td>" . $row["ItemID"] ."</td>";
+                    echo "<td>" . $row["ItemName"] ."</td>";
+                    echo "<td>" . $row["Description"] ."</td>";
+                    echo "<td>" . $row["Price"] ."</td>";
+                    echo "<td><button class=\"add-to-cart\" data-ItemID=\"" . $row["ItemID"] . "\" data-ItemName=\"" . $row["ItemName"] . "\" data-Price=\"" . $row["Price"] . "\">+</button></td>";
+                    echo "</table>";
+                  }
+              }
+          }
+          else {
+              echo "<tr><t colspan='4'> No records found. </t></tr>";
+          }
+
+          // // Check if items exist
+          // if ($items !== false && $items->num_rows > 0) {
+          //     // Loop through each item
+          //     while ($item = $items->fetch_assoc()) {
+          //         echo "<tr>";
+          //         echo "<td>" . $item["ItemName"] . "</td>";
+          //         echo "<td>" . $item["Price"] . "</td>";
+          //         echo "<td><button class=\"add-to-cart\" data-ItemID=\"" . $item["ItemID"] . "\" data-ItemName=\"" . $item["ItemName"] . "\" data-Price=\"" . $item["Price"] . "\">+</button></td>";
+          //         echo "</tr>";
+          //     }
+          // } else {
+          //     // If no items found for the category
+          //     echo "<tr><td colspan='3'>No items found.</td></tr>";
+          // }
+
+          echo "</table>";
+          echo "</div>";
+          echo "</section>";
+      }
+  } else {
+      // If no categories found
+      echo "<section class='category'>";
+      echo "<div class='container'>";
+      echo "<h2>No categories found.</h2>";
+      echo "</div>";
+      echo "</section>";
+  }
+  ?>
 
   <footer>
     <div class="container">

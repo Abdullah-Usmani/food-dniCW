@@ -34,16 +34,19 @@ function createCustomer($user, $pass, $email, $name, $number) {
     return execPreparedStatement($sql, $params);
 }
 function readCustomer() {
+    global $conn;
     $sql = "SELECT * FROM Customer";
     return execPreparedStatement($sql, []);
 }
 function updateCustomer($id, $user, $pass, $email, $name, $number) {
+    global $conn;
     $sql = "UPDATE Customer SET Username=?, Password=?, Email=?, Name=?, PhoneNumber=? WHERE CustomerID=?";
     $params = [$user, $pass, $email, $name, $number, $id];
     
     return execPreparedStatement($sql, $params);
 }
 function deleteCustomer($id) {
+    global $conn;
     $sql = "DELETE FROM Customer WHERE CustomerID=?";
     $params = [$id];
     return execPreparedStatement($sql, $params);
@@ -65,6 +68,7 @@ function createMenuItem($name, $desc, $url, $price, $status) {
     return execPreparedStatement($sql, $params);
 }
 function readMenuItem() {
+    global $conn;
     $sql = "SELECT * FROM MenuItem";
     return execPreparedStatement($sql, []);
 }
@@ -76,9 +80,27 @@ function updateMenuItem($id, $name, $desc, $url, $price, $status) {
     return execPreparedStatement($sql, $params);
 }
 function deleteMenuItem($id) {
+    global $conn;
     $sql = "DELETE FROM MenuItem WHERE MenuItemID=?";
     $params = [$id];
     return execPreparedStatement($sql, $params);
 }
 
+// CATEGORIES STUFF
+function readMenuCategories() {
+    global $conn;
+    $sql = "SELECT * FROM MenuCategory";
+    return execPreparedStatement($sql, []);
+}
+
+function readMenuItemByCategories() {
+    global $conn;
+    // SQL query to retrieve menu items grouped by categories
+    $sql = "SELECT mc.CategoryName, mi.ItemName, mi.Description, mi.Price
+            FROM MenuCategory mc
+            INNER JOIN MenuItem mi ON mc.CategoryID = mi.CategoryID
+            ORDER BY mc.CategoryName";
+
+    return execPreparedStatement($sql, []);
+}
 ?>
