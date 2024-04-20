@@ -104,7 +104,7 @@ $totalAmount = $subTotal + $tax + $shippingCost;
         <p>Total Amount: $<?php echo number_format($totalAmount, 2); ?></p>
       </div>
     <p class="message" style="display:none;"></p>
-      <button id="view-cart-button" class="header-button">Pay now</button>
+      <button id="pay-now-button" class="header-button">Pay now</button>
     </div>
   </div>
 
