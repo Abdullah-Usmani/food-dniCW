@@ -104,26 +104,10 @@ $totalAmount = $subTotal + $tax + $shippingCost;
         <p>Total Amount: $<?php echo number_format($totalAmount, 2); ?></p>
       </div>
     <p class="message" style="display:none;"></p>
-      <button id="view-cart-button" class="header-button" onclick="location.href='payment.php'">Pay now</button>
+      <button id="view-cart-button" class="header-button">Pay now</button>
     </div>
   </div>
 
   <script src="cart.js"></script>
-  <script>
-    function payNow() {
-      const phone = document.getElementById("phone").value;
-      const location = document.getElementById("location").value;
-      
-      if (!phone || !location) {
-        const messageElement = document.querySelector(".message");
-        messageElement.textContent = "Please fill out all fields!";
-        messageElement.style.display = "block";
-      } else {
-        // Proceed with payment process
-        // For demonstration purposes, alerting the values
-        alert(`Phone Number: ${phone}\nAddress: ${location}`);
-      }
-    }
-  </script>
 </body>
 </html>
