@@ -37,10 +37,10 @@
   <header>
     <div class="container">
       <div class="header-buttons">
-        <button onclick="location.href='menu.php'>Main Menu</button>
-        <button onclick="location.href='cart.php'>Cart</button>
-        <button onclick="location.href='status.php'>Order Status</button>
-        <button onclick="location.href='signup.php'>Log in</button> <!-- New Button -->
+        <button onclick="location.href='menu.php'">Main Menu</button>
+        <button onclick="location.href='cart.php'">Cart</button>
+        <button onclick="location.href='status.php'">Order Status</button>
+        <button onclick="location.href='signup.php'">Log in</button> <!-- New Button -->
       </div>
     </div>
   </header>
