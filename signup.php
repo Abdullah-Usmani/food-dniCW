@@ -6,6 +6,7 @@
   <title>Login or Sign Up</title>
   <link rel="stylesheet" href="signup.css">
 </head>
+
 <body>
   <div class="background"></div>
   <div class="login-signup-page">
@@ -30,7 +31,6 @@
     <div class="signup-content" id="signup" style="display: none;">
       <h1>Sign Up</h1>
 
-
       <form class="signup-form" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
         <div class="input-group">
           <label for="signup-username">Username</label>
@@ -46,7 +46,6 @@
         </div>
         <button type="submit" class="signup-button">Sign Up</button>
       </form>
-
 
       <p>Already have an account? <a href="#" class="login-link">Login</a></p>
     </div>
@@ -72,24 +71,6 @@ session_start(); // Start the session
 include 'connection.php';
 include 'functions.php';
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $user = $_POST["signup-username"];
-    $email = $_POST["signup-email"];
-    $pass = $_POST["signup-password"];
-
-    $result = createCustomer($user, $pass, $email, NULL, NULL);
-
-    if ($result) {
-        echo "<br>";
-        echo "Customer added successfully";
-    }
-    else {
-        echo "Failed to add customer" . $conn->error;
-    }
-}
-
-
-
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["login"])) {
     $username = $_POST["login-username"];
     $password = $_POST["login-password"];
@@ -107,6 +88,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["login"])) {
         exit();
     } else {
         $error = "Invalid username or password";
+    }
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $user = $_POST["signup-username"];
+    $email = $_POST["signup-email"];
+    $pass = $_POST["signup-password"];
+
+    $result = createCustomer($user, $pass, $email, NULL, NULL);
+
+    if ($result) {
+        echo "<br>";
+        echo "Customer added successfully";
+    }
+    else {
+        echo "Failed to add customer" . $conn->error;
     }
 }
 

@@ -64,7 +64,7 @@
       <div class="header-buttons">
         <button onclick="location.href='menu.php'">Main Menu</button>
         <button onclick="location.href='cart.php'">Cart</button>
-        <button onclick="location.href='payment.html'">Order Status</button>
+        <button onclick="location.href='payment.php'">Order Status</button>
       </div>
     </div>
     <div class="container">
