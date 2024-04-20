@@ -51,9 +51,9 @@ $totalAmount = $subTotal + $tax + $shippingCost;
   <div class="header">
       <h1>My Cart</h1>
       <div class="header-buttons">
-        <button id="view-cart-button" class="header-button">View Cart</button>
-        <button id="main-menu-button" class="header-button">Main Menu</button>
-        <button id="order-status-button" class="header-button">Order Status</button>
+        <button id="view-cart-button" class="header-button" onclick="location.href='cart.php'">View Cart</button>
+        <button id="main-menu-button" class="header-button" onclick="location.href='menu.php'">Main Menu</button>
+        <button id="order-status-button" class="header-button" onclick="location.href='status.php'">Order Status</button>
       </div>
     </div>
     <div class="cart-items">
