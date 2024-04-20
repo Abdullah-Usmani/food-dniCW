@@ -71,6 +71,12 @@ $totalAmount = $subTotal + $tax + $shippingCost;
       }
     ?>
     </div>
+    <div class="user-info">
+        <label for="phone">Phone Number:</label>
+        <input type="text" id="phone" name="phone">
+        <label for="location">Address:</label>
+        <input type="text" id="location" name="location">
+      </div>
 
     <!-- Summary -->
     <div class="cart-summary">

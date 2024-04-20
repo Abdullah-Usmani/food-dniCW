@@ -54,5 +54,5 @@ function contactSupport() {
 
 function returnToMenu() {
   // Redirect to website.html
-  window.location.href = 'Main Menu.html';
+  window.location.href = 'menu.php';
 }

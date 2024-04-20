@@ -67,7 +67,6 @@
 </html>
 
 <?php
-
 session_start(); // Start the session
 
 include 'connection.php';
@@ -88,6 +87,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "Failed to add customer" . $conn->error;
     }
 }
+
+
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["login"])) {
     $username = $_POST["login-username"];

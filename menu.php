@@ -31,10 +31,42 @@
       cursor: pointer;
       border-radius: 4px;
     }
+        /* Your existing CSS styles */
+    header {
+      background-color: #f2f2f2;
+      padding: 10px 0;
+    }
+    .container {
+      width: 90%;
+      margin: 0 auto;
+    }
+    .header-buttons {
+      text-align: right;
+    }
+    .header-buttons button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      margin: 0 5px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
   </style>
 </head>
 <body>
+  <!-- Header Section -->
   <header>
+    <div class="container">
+      <div class="header-buttons">
+        <button onclick="location.href='menu.php'">Main Menu</button>
+        <button onclick="location.href='cart.php'">Cart</button>
+        <button onclick="location.href='payment.html'">Order Status</button>
+      </div>
+    </div>
     <div class="container">
       <h1><a href="#">Desi Kitchen</a></h1>
       <nav>
