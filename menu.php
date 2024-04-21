@@ -78,14 +78,19 @@ session_start(); // Start the session
             if ($result !== false && $result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
                     if ($row["CustomerID"] == $userID) {
-                      echo "<button>Welcome back, Mr. ". $row["Username"] . " UserID - "  . $row["CustomerID"] ." </button>";
+                      echo "<button>".$row["Username"]." ID - ".$row["CustomerID"]."</button>";
+                      echo "<button onclick=\"location.href='logout.php'\">Logout</button>";
                     }
                 }
             }
             else {
-                echo "<button>User not logged in.</button>";
+                echo "<p>User not logged in</p>";
+                echo "<button onclick=\"location.href='signup.php'\">Login</button>";
             }
-            // Now you can use $userID to fetch user-specific data or perform any other operations
+          }
+        else {
+            echo "<button>User not logged in</button>";
+            echo "<button onclick=\"location.href='signup.php'\">Login</button>";
         }
         ?>
       </div>
@@ -179,7 +184,7 @@ session_start(); // Start the session
           const Price = button.dataset.price;
           addToCart(ItemID, ItemName, Price);
           // Optionally, provide visual feedback to the user
-          alert("Item added to cart: " + ItemName + Price + ItemID);
+          alert(ItemName + " added to cart");
         });
       });
 
