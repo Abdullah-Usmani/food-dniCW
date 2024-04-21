@@ -51,3 +51,7 @@ no need to login, until CART->ORDER->SIGNUP->ORDER->PAYMENT->STATUS
 MENU page -> each item should have an add to cart button, then add to session THAT ITEM
 ORDER page should hold SELECTED ITEMS, HOLD THOSE IN A SESSION
 ORDER if only SIGNED UP
+
+USE ORDERS table to save items in CART, if order CONFIRMED & PAID -> OrderStatus == 1, OrderDateTime == SET (otherwise NULL)
+
+IMPLEMENT LOGOUT FUNCTION

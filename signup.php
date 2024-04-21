@@ -1,3 +1,7 @@
+<?php
+include 'functions.php';
+session_start(); // Start the session
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -66,10 +70,6 @@
 </html>
 
 <?php
-session_start(); // Start the session
-
-include 'connection.php';
-include 'functions.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["login"])) {
     $username = $_POST["login-username"];
@@ -88,6 +88,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["login"])) {
         exit();
     } else {
         $error = "Invalid username or password";
+        echo $error;
     }
 }
 

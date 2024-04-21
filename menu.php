@@ -1,6 +1,6 @@
 <?php
-include 'connection.php';
 include 'functions.php';
+session_start(); // Start the session
 ?>
 
 <!DOCTYPE html>
@@ -69,7 +69,25 @@ include 'functions.php';
       <div class="header-buttons">
         <button onclick="location.href='menu.php'">Main Menu</button>
         <button onclick="location.href='cart.php'">Cart</button>
-        <button onclick="location.href='payment.php'">Order Status</button>
+        <button onclick="location.href='status.php'">Order Status</button>
+        <!-- Display USER INFO -->
+        <?php
+        if (isset($_SESSION["user_id"])) {
+            $userID = $_SESSION["user_id"];
+            $result = readCustomer();
+            if ($result !== false && $result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    if ($row["CustomerID"] == $userID) {
+                      echo "<button>Welcome back, Mr. ". $row["Username"] . " UserID - "  . $row["CustomerID"] ." </button>";
+                    }
+                }
+            }
+            else {
+                echo "<button>User not logged in.</button>";
+            }
+            // Now you can use $userID to fetch user-specific data or perform any other operations
+        }
+        ?>
       </div>
     </div>
     <div class="container">

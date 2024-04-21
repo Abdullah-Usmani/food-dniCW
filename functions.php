@@ -97,7 +97,37 @@ function readMenuItemByCategories() {
     global $conn;
     // SQL query to retrieve menu items grouped by categories
     $sql = "SELECT * FROM MenuItem WHERE MenuItem";
-
+    
     return execPreparedStatement($sql, []);
 }
+
+// ORDER/CART STUFF
+function createOrders($customerid, $datetime, $price, $status) {
+    global $conn;
+    $sql = "INSERT INTO Orders (CustomerID, OrderDateTime, Price, OrderStatus) VALUES (?, ?, ?, ?)";
+    $params = [$customerid, $datetime, $price, $status];
+
+    return execPreparedStatement($sql, $params);
+}
+function readOrders() {
+    global $conn;
+    $sql = "SELECT * FROM Orders";
+    return execPreparedStatement($sql, []);
+}
+
+// Update CART --> ORDERED, PRICE --> PRICE, DATE --> DATE
+function updateOrders($id, $customerid, $datetime, $price, $status) {
+    global $conn;
+    $sql = "UPDATE Orders SET CustomerID=?, OrderDateTime=?, Price=?, OrderStatus=?, WHERE OrderID=?";
+    $params = [$customerid, $datetime, $price, $status, $id];
+    
+    return execPreparedStatement($sql, $params);
+}
+function deleteOrders($id) {
+    global $conn;
+    $sql = "DELETE FROM Orders WHERE OrderID=?";
+    $params = [$id];
+    return execPreparedStatement($sql, $params);
+}
+
 ?>
