@@ -9,13 +9,12 @@ if (isset($_POST['OrderItemID'])) {
     // Call the deleteOrder function with the provided OrderID and OrderItemID
     deleteOrderItem($OrderItemID);
 
-    // Retrieve loggedIn and userID from POST data
-    $loggedIn = isset($_POST['loggedIn']) ? $_POST['loggedIn'] : false;
-    $userID = isset($_POST['userID']) ? $_POST['userID'] : 0;
+    // // Retrieve loggedIn and userID from POST data
+    // $loggedIn = isset($_POST['loggedIn']) ? $_POST['loggedIn'] : false;
+    // $userID = isset($_POST['userID']) ? $_POST['userID'] : 0;
+} 
 
-    // Display the updated cart
-    displayCart($loggedIn, $userID);
-} else {
+else {
     // Error: Missing parameters
     echo "Missing parameters";
 }
