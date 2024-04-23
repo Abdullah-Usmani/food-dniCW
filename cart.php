@@ -1,36 +1,14 @@
 <?php
 include 'functions.php';
 session_start(); // Start or resume a session
+$loggedIn = false;
+$userID = 0;
 
 // Initialize variables for subtotal and total amount
 $subTotal = 0;
 $taxRate = 0.10; // Assuming 10% tax rate
 $shippingCost = 5; // Assuming a fixed shipping cost
 $totalAmount = 0;
-
-// Check if the cart session variable exists
-if(isset($_SESSION['cart'])) {
-    // Initialize an array to store unique item IDs and their quantities
-    $uniqueItems = array();
-    
-    // Iterate over each item in the cart
-    foreach($_SESSION['cart'] as $item) {
-        // Add the item to the uniqueItems array or update its quantity
-        $itemID = $item['ItemID'];
-        if(isset($uniqueItems[$itemID])) {
-            $uniqueItems[$itemID]['Quantity']++;
-        } else {
-            $uniqueItems[$itemID] = array(
-                'ItemName' => $item['ItemName'],
-                'Price' => $item['Price'],
-                'Quantity' => 1
-            );
-        }
-        
-        // Calculate the subtotal for each item (price * quantity)
-        $subTotal += $item['Price'];
-    }
-}
 
 // Calculate tax amount
 $tax = $subTotal * $taxRate;
@@ -44,8 +22,23 @@ $totalAmount = $subTotal + $tax + $shippingCost;
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Cart - Nando's</title>
+  <title>My Cart - HungerStation</title>
   <link rel="stylesheet" href="cart.css">
+  <style>
+      .remove-from-cart {
+      background-color: maroon;
+      border: none;
+      color: white;
+      padding: 8px 16px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 14px;
+      margin: 4px 2px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+  </style>
 </head>
 <body>
   <div class="cart-page">
@@ -60,6 +53,7 @@ $totalAmount = $subTotal + $tax + $shippingCost;
               $userID = $_SESSION["user_id"];
               $result = readCustomer();
               if ($result !== false && $result->num_rows > 0) {
+                $loggedIn = true;
                   while ($row = $result->fetch_assoc()) {
                       if ($row["CustomerID"] == $userID) {
                         echo "<button>".$row["Username"]." ID - ".$row["CustomerID"]."</button>";
@@ -78,29 +72,11 @@ $totalAmount = $subTotal + $tax + $shippingCost;
           }
           ?>
         </div>
-    </div>
+      </div>
     <div class="cart-items">
-    <?php
-      // Display cart items
-      if(isset($_SESSION['cart'])) {
-          foreach($uniqueItems as $itemID => $item) {
-              echo '<div class="cart-item">';
-              echo '<img src="food.jpg" alt="' . $item['ItemName'] . '">';
-              echo '<div class="item-details">';
-              echo '<h2>' . $item['ItemName'] . '</h2>';
-              echo '<p>Quantity: ' . $item['Quantity'] . '</p>';
-              echo '<p>Price: $' . $item['Price'] . ' each</p>';
-              echo '</div>';
-              echo '</div>';
-          }
-      } 
-      else {
-          // Display message if cart is empty
-          echo '<div class="cart-item">';
-          echo '<p>Your cart is empty.</p>';
-          echo '</div>';
-      }
-    ?>
+        <?php
+        displayCart($loggedIn, $userID);
+        ?>
     </div>
     <div class="user-info">
         <label for="phone">Phone Number:</label>
@@ -133,5 +109,44 @@ $totalAmount = $subTotal + $tax + $shippingCost;
   </div>
 
   <script src="cart.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const removeFromCartbuttons = document.querySelectorAll(".remove-from-cart");
+      removeFromCartbuttons.forEach(button => {
+        button.addEventListener("click", function(event) {
+          const OrderItemID = button.dataset.orderitemid;
+          const ItemName = button.dataset.itemname;
+          const loggedIn = button.dataset.loggedin;
+          const userID = button.dataset.userid;
+          deleteOrder(OrderItemID);
+          // Optionally, provide visual feedback to the user
+          alert(ItemName + " removed from cart");
+        });
+      });
+
+      function deleteOrder(OrderItemID) {
+        // Send an AJAX request to addToCart.php to remove the item from the cart
+        const xhr = new XMLHttpRequest();
+        const url = "removeFromCart.php";
+        const params = `OrderItemID=${OrderItemID}, loggedIn=${loggedIn}, userID=${userID}`;
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhr.onload = function() {
+          if (xhr.status === 200) {
+            // Handle successful response
+            console.log(xhr.responseText);
+          } else {
+            // Handle error response
+            console.error("Error removing item from cart");
+          }
+        };
+        xhr.onerror = function() {
+          // Handle connection error
+          console.error("Connection error");
+        };
+        xhr.send(params);
+      }
+    });
+    </script>
 </body>
 </html>

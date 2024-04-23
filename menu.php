@@ -138,22 +138,6 @@ session_start(); // Start the session
           else {
               echo "<tr><t colspan='4'> No records found. </t></tr>";
           }
-
-          // // Check if items exist
-          // if ($items !== false && $items->num_rows > 0) {
-          //     // Loop through each item
-          //     while ($item = $items->fetch_assoc()) {
-          //         echo "<tr>";
-          //         echo "<td>" . $item["ItemName"] . "</td>";
-          //         echo "<td>" . $item["Price"] . "</td>";
-          //         echo "<td><button class=\"add-to-cart\" data-ItemID=\"" . $item["ItemID"] . "\" data-ItemName=\"" . $item["ItemName"] . "\" data-Price=\"" . $item["Price"] . "\">+</button></td>";
-          //         echo "</tr>";
-          //     }
-          // } else {
-          //     // If no items found for the category
-          //     echo "<tr><td colspan='3'>No items found.</td></tr>";
-          // }
-
           echo "</table>";
           echo "</div>";
           echo "</section>";
