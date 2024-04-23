@@ -3,6 +3,7 @@ include 'functions.php';
 session_start(); // Start or resume a session
 $loggedIn = false;
 $userID = 0;
+$OrderID = 0;
 
 // Initialize variables for subtotal and total amount
 $subTotal = 0;
@@ -108,7 +109,8 @@ $totalAmount = $subTotal + $tax + $shippingCost;
                 if ($row1["CustomerID"] == $userID) {
                     $result2 = readOrderItem();
                     while ($row2 = $result2->fetch_assoc()) {
-                        if ($row2["OrderID"] == $row1["OrderID"]) {
+                        if ($row2["OrderID"] == $row1["OrderID"] && $row1["OrderStatus"] == 0) {
+                            $OrderID = $row1["OrderID"];
                             $result3 = readMenuItem();
                             if ($result3 !== false && $result3->num_rows > 0) {
                                 while ($row3 = $result3->fetch_assoc()) {
@@ -185,7 +187,7 @@ $totalAmount = $subTotal + $tax + $shippingCost;
           <select id="payment-options">
             <option value="cash">Cash</option>
             <option value="credit-debit">Credit/Debit Card</option>
-            <option value="tng">Touch 'n Go</option>
+            <!-- <option value="tng">Touch 'n Go</option> -->
           </select>
         </div>
         <p>Total Amount: $<?php echo number_format($totalAmount, 2); ?></p>
@@ -208,7 +210,7 @@ $totalAmount = $subTotal + $tax + $shippingCost;
           alert(ItemName + " removed from cart");
         });
       });
-
+      
       function deleteOrder(OrderItemID) {
         // Send an AJAX request to addToCart.php to remove the item from the cart
         const xhr = new XMLHttpRequest();
@@ -232,6 +234,63 @@ $totalAmount = $subTotal + $tax + $shippingCost;
         xhr.send(params);
       }
     });
+
+      // Get the payment options select element
+    // Event listener for pay now button
+    document.getElementById("pay-now-button").addEventListener("click", function(event) {
+        event.preventDefault(); // Prevent default form submission
+
+        const phone = document.getElementById("phone").value;
+        const location = document.getElementById("location").value;
+        const paymentMethod = document.getElementById("payment-options").value;
+
+        if (!phone || !location) {
+          const messageElement = document.querySelector(".message");
+          messageElement.textContent = "Please fill out all fields!";
+          messageElement.style.display = "block";
+        } else {
+          // Proceed with payment process based on payment method
+          if (paymentMethod === "credit-debit") {
+            // Redirect to payment.php for Credit/Debit Card payment
+            const orderID = "<?php echo $OrderID; ?>";
+            window.location.href = 'payment.php?OrderID=' + orderID;
+          } else if (paymentMethod === "cash") {
+            // Call the updateOrders function using AJAX
+            const orderID = "<?php echo $OrderID; ?>";
+            updateOrders(orderID);
+          } else {
+            // For other methods, just alert the values
+            alert('Phone Number: ${phone}\nAddress: ${location}\nPayment Method: ${paymentMethod}');
+          }
+        }
+      });
+
+      function updateOrders(OrderID) {
+        // Send an AJAX request to updateOrders.php with the OrderID
+        const xhr = new XMLHttpRequest();
+        const url = "updateOrders.php"; // Change this to the appropriate PHP script
+        const params = `OrderID=${OrderID}`;
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                // Handle successful response
+                console.log(xhr.responseText);
+                // Redirect to status.php
+                window.location.href = 'status.php';
+            } else {
+                // Handle error response
+                console.error("Error updating orders");
+            }
+        };
+        xhr.onerror = function() {
+            // Handle connection error
+            console.error("Connection error");
+        };
+        xhr.send(params);
+    }
+
+
     </script>
 </body>
 </html>

@@ -123,6 +123,14 @@ function updateOrders($id, $customerid, $datetime, $price, $status) {
     
     return execPreparedStatement($sql, $params);
 }
+
+function sendOrders($id, $status) {
+    global $conn;
+    $sql = "UPDATE Orders SET OrderStatus=? WHERE OrderID=?";
+    $params = [$status, $id];
+    
+    return execPreparedStatement($sql, $params);
+}
 function deleteOrders($id) {
     global $conn;
     $sql = "DELETE FROM Orders WHERE OrderID=?";

@@ -76,6 +76,7 @@ session_start(); // Start the session
             $userID = $_SESSION["user_id"];
             $result = readCustomer();
             if ($result !== false && $result->num_rows > 0) {
+              $loggedIn = true;
                 while ($row = $result->fetch_assoc()) {
                     if ($row["CustomerID"] == $userID) {
                       echo "<button>".$row["Username"]." ID - ".$row["CustomerID"]."</button>";
