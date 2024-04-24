@@ -87,7 +87,7 @@ $userID = 0;
   </div> -->
 <?php
   if ($loggedIn) {
-    $result1 = readOrders();
+    $result1 = readOrders("DESC");
     if ($result1 !== false && $result1->num_rows > 0) {
       $foundItems = false; // Flag to indicate if any items were found in the order history
       while ($row1 = $result1->fetch_assoc()) {

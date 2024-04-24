@@ -37,7 +37,7 @@ if(isset($_POST['ItemID'], $_POST['ItemName'], $_POST['Price'])) {
         // SET NEW PRICE
         $statusZeroFound1 = false;
         $foundOrderID = 0;
-        $result = readOrders();
+        $result = readOrders("DESC");
         if ($result !== false && $result->num_rows > 0) {
             while (($row = $result->fetch_assoc()) && !$statusZeroFound1) {
                 if ($row["CustomerID"] == $userID && $row["OrderStatus"] == 0) {
@@ -51,7 +51,7 @@ if(isset($_POST['ItemID'], $_POST['ItemName'], $_POST['Price'])) {
             }
             else {
                 createOrders($userID, $currentDateTime, $price, 0);
-                $temp = readOrders();
+                $temp = readOrders("DESC");
                 if ($temp !== false && $temp->num_rows > 0) {
                     while (($temprow = $temp->fetch_assoc())) {
                         if ($temprow["CustomerID"] == $userID && $temprow["OrderStatus"] == 0) {
@@ -66,7 +66,7 @@ if(isset($_POST['ItemID'], $_POST['ItemName'], $_POST['Price'])) {
         // if no ORDER exists at all
         else {
             createOrders($userID, $currentDateTime, $price, 0);
-            $temp = readOrders();
+            $temp = readOrders("DESC");
             if ($temp !== false && $temp->num_rows > 0) {
                     while ($temprow = $temp->fetch_assoc()) {
                             if ($temprow["CustomerID"] == $userID && $temprow["OrderStatus"] == 0) {

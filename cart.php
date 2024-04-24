@@ -11,35 +11,6 @@ $taxRate = 0.10; // Assuming 10% tax rate
 $shippingCost = 5; // Assuming a fixed shipping cost
 $totalAmount = 0;
 
-// Check if the cart session variable exists
-if(isset($_SESSION['cart'])) {
-    // Initialize an array to store unique item IDs and their quantities
-    $uniqueItems = array();
-    
-    // Iterate over each item in the cart
-    foreach($_SESSION['cart'] as $item) {
-        // Add the item to the uniqueItems array or update its quantity
-        $itemID = $item['ItemID'];
-        if(isset($uniqueItems[$itemID])) {
-            $uniqueItems[$itemID]['Quantity']++;
-        } else {
-            $uniqueItems[$itemID] = array(
-                'ItemName' => $item['ItemName'],
-                'Price' => $item['Price'],
-                'Quantity' => 1
-            );
-        }
-        
-        // Calculate the subtotal for each item (price * quantity)
-        $subTotal += $item['Price'];
-    }
-}
-
-// Calculate tax amount
-$tax = $subTotal * $taxRate;
-
-// Calculate total amount (subtotal + tax + shipping)
-$totalAmount = $subTotal + $tax + $shippingCost;
 ?>
 
 <!DOCTYPE html>
@@ -102,7 +73,7 @@ $totalAmount = $subTotal + $tax + $shippingCost;
         <?php
       // Display cart items
       if($loggedIn) {
-        $result1 = readOrders();
+        $result1 = readOrders("DESC");
         if ($result1 !== false && $result1->num_rows > 0) {
             $foundItems = false; // Flag to indicate if any items were found in the cart
             while ($row1 = $result1->fetch_assoc()) {
@@ -124,7 +95,8 @@ $totalAmount = $subTotal + $tax + $shippingCost;
                                         echo '<p>OrderID: ' . $row2['OrderID'] . '</p>';
                                         echo '<p>OrderItemID: ' . $row2['OrderItemID'] . '</p>';
                                         echo '<p>CustomerID: ' . $row1['CustomerID'] . '</p>';
-                                        echo '<p>Price: $' . $row3['Price'] . ' each</p>';
+                                        echo '<p>Price: $' . $row3['Price'] . '</p>';
+                                        $subTotal += $row3['Price'];
                                         echo "<button class=\"remove-from-cart\" data-orderitemid=\"" . $row2["OrderItemID"] . "\"data-itemname=\"" . $row3["ItemName"] . "\">-</button>";
                                         echo '</div>';
                                         echo '</div>';
@@ -146,25 +118,53 @@ $totalAmount = $subTotal + $tax + $shippingCost;
 
 
       else {
+        // Check if the cart session variable exists
         if(isset($_SESSION['cart'])) {
-          foreach($uniqueItems as $itemID => $item) {
-              echo '<div class="cart-item">';
-              echo '<img src="food.jpg" alt="' . $item['ItemName'] . '">';
-              echo '<div class="item-details">';
-              echo '<h2>' . $item['ItemName'] . '</h2>';
-              echo '<p>Quantity: ' . $item['Quantity'] . '</p>';
-              echo '<p>Price: $' . $item['Price'] . ' each</p>';
-              echo '</div>';
-              echo '</div>';
-            }
+          // Initialize an array to store unique item IDs and their quantities
+          $uniqueItems = array();
+          
+          // Iterate over each item in the cart
+          foreach($_SESSION['cart'] as $item) {
+              // Add the item to the uniqueItems array or update its quantity
+              $itemID = $item['ItemID'];
+              if(isset($uniqueItems[$itemID])) {
+                  $uniqueItems[$itemID]['Quantity']++;
+              } else {
+                  $uniqueItems[$itemID] = array(
+                      'ItemName' => $item['ItemName'],
+                      'Price' => $item['Price'],
+                      'Quantity' => 1
+                  );
+              }
+              
+              // Calculate the subtotal for each item (price * quantity)
+              $subTotal += $item['Price'];
           }
+
+            foreach($uniqueItems as $itemID => $item) {
+                echo '<div class="cart-item">';
+                echo '<img src="food.jpg" alt="' . $item['ItemName'] . '">';
+                echo '<div class="item-details">';
+                echo '<h2>' . $item['ItemName'] . '</h2>';
+                echo '<p>Quantity: ' . $item['Quantity'] . '</p>';
+                echo '<p>Price: $' . $item['Price'] . ' each</p>';
+                echo '</div>';
+                echo '</div>';
+              }
+          }
+
         else {
           // Display message if cart is empty
           echo '<div class="cart-item">';
           echo '<p>Your cart is empty.</p>';
           echo '</div>';
-        } 
+        }
       }
+      // Calculate tax amount
+      $tax = $subTotal * $taxRate;
+
+      // Calculate total amount (subtotal + tax + shipping)
+      $totalAmount = $subTotal + $tax + $shippingCost;
     ?>
     </div>
     <div class="user-info">

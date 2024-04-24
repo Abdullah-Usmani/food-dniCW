@@ -109,9 +109,9 @@ function createOrders($customerid, $datetime, $price, $status) {
 
     return execPreparedStatement($sql, $params);
 }
-function readOrders() {
+function readOrders($direction = "ASC") {
     global $conn;
-    $sql = "SELECT * FROM Orders";
+    $sql = "SELECT * FROM Orders ORDER BY OrderID $direction";
     return execPreparedStatement($sql, []);
 }
 
