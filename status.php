@@ -37,9 +37,9 @@
   <header>
     <div class="container">
       <div class="header-buttons">
-        <button onclick="location.href='Main Menu.html'">Main Menu</button>
-        <button onclick="location.href='cart.html'">Cart</button>
-        <button onclick="location.href='order-status.html'">Order Status</button>
+        <button onclick="location.href='menu.php'">Main Menu</button>
+        <button onclick="location.href='cart.php'">Cart</button>
+        <button onclick="location.href='status.php'">Order Status</button>
         <button onclick="location.href='signup.html'">Log in</button> <!-- New Button -->
       </div>
     </div>
