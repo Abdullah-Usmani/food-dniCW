@@ -168,4 +168,12 @@ function deleteOrderItem($id) {
 }
 function displayCart($loggedIn, $userID) {}
 
+// ORDER/CART STUFF
+function createCardPayment($orderid, $customerid, $price, $cardNumber, $expiryDate, $cvv) {
+    global $conn;
+    $sql = "INSERT INTO Payment (OrderID, CustomerID, Price, PaymentMethod, CardNumber, ExpiryDate, CVV) VALUES (?, ?, ?, 'Card', ?, ?)";
+    $params = [$orderid, $customerid, $price, $cardNumber, $expiryDate, $cvv];
+
+    return execPreparedStatement($sql, $params);
+}
 ?>

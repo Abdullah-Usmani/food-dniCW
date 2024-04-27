@@ -29,11 +29,11 @@ CREATE TABLE Customer (
 -- ALTER TABLE Customer
 -- MODIFY Email TEXT NOT NULL UNIQUE;
 
--- -- Set PhoneNumber column to UNIQUE and allow NULL values
+-- Set PhoneNumber column to UNIQUE and allow NULL values
 -- ALTER TABLE Customer
 -- MODIFY PhoneNumber INT UNIQUE;
 
--- -- Allow Address column to have NULL values
+-- Allow Address column to have NULL values
 -- ALTER TABLE Customer
 -- MODIFY Address VARCHAR(50);
 --
@@ -64,13 +64,17 @@ CREATE TABLE Orders (
     OrderStatus BOOLEAN NOT NULL DEFAULT 0,
     FOREIGN KEY (CustomerID) REFERENCES Customer(CustomerID)
 );
+
+-- Payment details
 CREATE TABLE Payment (
     PaymentID INT PRIMARY KEY AUTO_INCREMENT,
     OrderID INT NOT NULL,
     CustomerID INT NOT NULL,
-    OrderDateTime DATETIME NOT NULL,
     Price REAL NOT NULL DEFAULT 0.00,
-    OrderStatus BOOLEAN NOT NULL DEFAULT 0,
+    PaymentMethod VARCHAR(30) NOT NULL,
+    CardNumber INT(16),
+    ExpiryDate VARCHAR(5),
+    CVV INT(3),
     FOREIGN KEY (OrderID) REFERENCES Orders(OrderID),
     FOREIGN KEY (CustomerID) REFERENCES Customer(CustomerID)
 );
