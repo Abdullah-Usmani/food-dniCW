@@ -54,8 +54,8 @@ CREATE TABLE MenuItem (
 );
 
 
---RENAME TABLE - can't use ORDER, changed to ORDERS NOW
---OrderStatus = delivered yes/no
+-- RENAME TABLE - can't use ORDER, changed to ORDERS NOW
+-- OrderStatus = delivered yes/no
 CREATE TABLE Orders (
     OrderID INT PRIMARY KEY AUTO_INCREMENT,
     CustomerID INT NOT NULL,
@@ -78,7 +78,7 @@ CREATE TABLE Payment (
 -- default price for items
 -- RENAME to ITEM
 -- ADD STOCK COLUMN, HOW MANY OF THESE ITEMS AVAILIABLE?
---ITEMID ARROW IS MISSING TO FOREIGN KEY
+-- ITEMID ARROW IS MISSING TO FOREIGN KEY
 CREATE TABLE OrderItem (
     OrderItemID INT PRIMARY KEY AUTO_INCREMENT,
     OrderID INT NOT NULL,

@@ -71,7 +71,7 @@ session_start(); // Start the session
       </form>
     </div>
   </div>
-
+  <script src="login_signup_script.js"></script>
 </body>
 </html>
 

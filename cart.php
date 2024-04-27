@@ -2,6 +2,7 @@
 include 'functions.php';
 session_start(); // Start or resume a session
 $loggedIn = false;
+$foundItems = false;
 $userID = 0;
 $OrderID = 0;
 
@@ -18,7 +19,7 @@ $totalAmount = 0;
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Cart - Nando's</title>
+  <title>My Cart</title>
   <link rel="stylesheet" href="cart.css">
   <style>
       .remove-from-cart {
@@ -236,34 +237,45 @@ $totalAmount = 0;
     });
 
       // Get the payment options select element
-    // Event listener for pay now button
-    document.getElementById("pay-now-button").addEventListener("click", function(event) {
-        event.preventDefault(); // Prevent default form submission
+      // Event listener for pay now button
+      document.getElementById("pay-now-button").addEventListener("click", function(event) {
+          event.preventDefault(); // Prevent default form submission
 
-        const phone = document.getElementById("phone").value;
-        const location = document.getElementById("location").value;
-        const paymentMethod = document.getElementById("payment-options").value;
+          const phone = document.getElementById("phone").value;
+          const location = document.getElementById("location").value;
+          const paymentMethod = document.getElementById("payment-options").value;
 
-        if (!phone || !location) {
-          const messageElement = document.querySelector(".message");
-          messageElement.textContent = "Please fill out all fields!";
-          messageElement.style.display = "block";
-        } else {
-          // Proceed with payment process based on payment method
-          if (paymentMethod === "credit-debit") {
-            // Redirect to payment.php for Credit/Debit Card payment
-            const orderID = "<?php echo $OrderID; ?>";
-            window.location.href = 'payment.php?OrderID=' + orderID;
-          } else if (paymentMethod === "cash") {
-            // Call the updateOrders function using AJAX
-            const orderID = "<?php echo $OrderID; ?>";
-            updateOrders(orderID);
+          if (!phone || !location) {
+              // If phone or location is not filled out, display an error message
+              const messageElement = document.querySelector(".message");
+              messageElement.textContent = "Please fill out all fields!";
+              messageElement.style.display = "block";
           } else {
-            // For other methods, just alert the values
-            alert('Phone Number: ${phone}\nAddress: ${location}\nPayment Method: ${paymentMethod}');
+              // Check if the user is logged in and items are found in the cart
+              const loggedIn = "<?php echo $loggedIn; ?>";
+              const foundItems = "<?php echo $foundItems; ?>";
+              
+              if (loggedIn !== "1" || foundItems !== "1") {
+                  // If the user is not logged in or no items found in the cart, display an error message
+                  alert("Please log in or add items to your cart before proceeding with payment.");
+              } else {
+                  // Proceed with payment process based on payment method
+                  if (paymentMethod === "credit-debit") {
+                      // Redirect to payment.php for Credit/Debit Card payment
+                      const orderID = "<?php echo $OrderID; ?>";
+                      window.location.href = 'payment.php?OrderID=' + orderID;
+                  } else if (paymentMethod === "cash") {
+                      // Call the updateOrders function using AJAX
+                      const orderID = "<?php echo $OrderID; ?>";
+                      updateOrders(orderID);
+                  } else {
+                      // For other methods, just alert the values
+                      alert('Phone Number: ${phone}\nAddress: ${location}\nPayment Method: ${paymentMethod}');
+                  }
+              }
           }
-        }
       });
+
 
       function updateOrders(OrderID) {
         // Send an AJAX request to updateOrders.php with the OrderID
