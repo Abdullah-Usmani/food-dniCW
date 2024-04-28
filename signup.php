@@ -34,6 +34,28 @@ session_start(); // Start the session
           <?php unset($_SESSION["error"]); ?> <!-- Clear the error message after displaying -->
           <?php endif; ?>
 
+          <?php
+            if(isset($_SESSION['cart'])) {
+              // Initialize an array to store unique item IDs and their quantities
+              $uniqueItems = array();
+              
+              // Iterate over each item in the cart
+              foreach($_SESSION['cart'] as $item) {
+                  // Add the item to the uniqueItems array or update its quantity
+                  $itemID = $item['ItemID'];
+                  if(isset($uniqueItems[$itemID])) {
+                      $uniqueItems[$itemID]['Quantity']++;
+                  } else {
+                      $uniqueItems[$itemID] = array(
+                          'ItemName' => $item['ItemName'],
+                          'Price' => $item['Price'],
+                          'ImageURL' => $item['ImageURL'],
+                      );
+                  }
+                }
+            }
+        ?>
+
         <form name="login" class="login-form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
           <div class="input-group">
             <label for="login-username">Username</label>
@@ -46,7 +68,7 @@ session_start(); // Start the session
           <div class="input-group">
             <a href="#" class="forgot-password">Forgot Password?</a>
           </div>
-          <button type="submit" class="login-button" name="login">Login</button>
+            <button type="submit" class="login-button" name="login">Login</button>
         </form>
         <p>Don't have an account? <a href="#" class="signup-link">Sign up</a></p>
       </div>
@@ -89,6 +111,7 @@ session_start(); // Start the session
 
 <?php
 
+// Check if the user is logging in
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["login"])) {
     $username = $_POST["login-username"];
     $password = $_POST["login-password"];
@@ -101,20 +124,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["login"])) {
         $row = $result->fetch_assoc();
         $_SESSION["user_id"] = $row["CustomerID"];
 
+        // Transfer items from the temporary session variable to the user's cart in the database
+        if (isset($_SESSION['cart'])) {
+            $userID = $_SESSION["user_id"];
+            foreach ($_SESSION['cart'] as $item) {
+                $itemID = $item['ItemID'];
+                $itemName = $item['ItemName'];
+                $price = $item['Price'];
+                $imageURL = $item['ImageURL'];
+                // Add item to the user's cart in the database
+                tempToCart($userID, $itemID, $itemName, $price);
+            }
+            // Remove items from the temporary session variable
+            unset($_SESSION['cart']);
+        }
+
         // Redirect to the main menu page or any other page
         header("Location: menu.php");
         exit();
-    } 
-    else {
+    } else {
         // Set error message as a session variable
         $_SESSION["error"] = "Invalid username or password";
-        
+
         // Redirect back to the login page
         header("Location: signup.php");
         exit();
     }
 }
 
+// Check if the user is signing up
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["signup"])) {
     $user = $_POST["signup-username"];
     $email = $_POST["signup-email"];
@@ -125,10 +163,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["signup"])) {
     if ($result) {
         echo "<br>";
         echo "Customer added successfully";
-    }
-    else {
+    } else {
         echo "Failed to add customer" . $conn->error;
     }
 }
-
 ?>

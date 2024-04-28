@@ -1,7 +1,7 @@
 <?php
 session_start(); // Start the session
-session_unset(); // Unset all session variables
-session_destroy(); // Destroy the session data
+unset($_SESSION["user_id"]); // Unset all session variables
+// session_destroy(); // Destroy the session data
 
 // Redirect the user to a login page or any other page after logout
 header("Location: signup.php");

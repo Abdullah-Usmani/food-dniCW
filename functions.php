@@ -1,5 +1,4 @@
 <?php
-
 include 'connection.php';
 
 function execPreparedStatement($sql, $params) {
@@ -176,5 +175,53 @@ function createCardPayment($orderid, $customerid, $price, $method, $cardNumber, 
     unset($_SESSION['order_id']); // Remove OrderID from session
     header('Location: status.php'); // Redirect to success page
     return execPreparedStatement($sql, $params);
+}
+
+function tempToCart($userID, $itemID, $itemName, $price) {
+    global $conn;
+    
+    $currentDateTime = date('Y-m-d H:i:s');
+    
+    $statusZeroFound1 = false;
+    $foundOrderID = 0;
+    $result = readOrders("DESC");
+    if ($result !== false && $result->num_rows > 0) {
+        while (($row = $result->fetch_assoc()) && !$statusZeroFound1) {
+            if ($row["CustomerID"] == $userID && $row["OrderStatus"] == 0) {
+                $foundOrderID = $row["OrderID"];
+                $statusZeroFound1 = true;
+            }
+        }
+        if ($statusZeroFound1) {
+            updateOrders($foundOrderID, $userID, $currentDateTime, $price, 0);
+            createOrderItem($foundOrderID, $itemID);
+        }
+        else {
+            createOrders($userID, $currentDateTime, $price, 0);
+            $temp = readOrders("DESC");
+            if ($temp !== false && $temp->num_rows > 0) {
+                while (($temprow = $temp->fetch_assoc())) {
+                    if ($temprow["CustomerID"] == $userID && $temprow["OrderStatus"] == 0) {
+                        createOrderItem($temprow["OrderID"], $itemID);
+                    }
+                } 
+            }
+        }
+    }
+
+        
+    // if no ORDER exists at all
+    else {
+        createOrders($userID, $currentDateTime, $price, 0);
+        $temp = readOrders("DESC");
+        if ($temp !== false && $temp->num_rows > 0) {
+                while ($temprow = $temp->fetch_assoc()) {
+                        if ($temprow["CustomerID"] == $userID && $temprow["OrderStatus"] == 0) {
+                                createOrderItem($temprow["OrderID"], $itemID);
+                        }
+                }
+        }
+    }
+echo "Item added to cart: ID = $itemID, Name = $itemName, Price = $price";
 }
 ?>
