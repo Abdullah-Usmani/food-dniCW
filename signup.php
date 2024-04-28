@@ -9,35 +9,47 @@ session_start(); // Start the session
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login or Sign Up</title>
   <link rel="stylesheet" href="signup.css">
+  <style>
+    /* Add the CSS for the login box here */
+    .login-box {
+      background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+      border-radius: 10px; /* Rounded corners */
+      padding: 20px; /* Add padding */
+      margin: 50px auto; /* Center the box horizontally and add some top margin */
+      max-width: 400px; /* Limit the width of the box */
+    }
+  </style>
 </head>
 
 <body>
   <div class="background"></div>
   <div class="login-signup-page">
-    <div class="login-content" id="login">
-      <h1>Login</h1>
+    <div class="login-box"> <!-- Wrap all login-related content in a box -->
+      <div class="login-content" id="login">
+        <h1>Login</h1>
 
-        <!-- Display error message if it exists -->
-        <?php if(isset($_SESSION["error"])): ?>
-        <p><?php echo $_SESSION["error"]; ?></p>
-        <?php unset($_SESSION["error"]); ?> <!-- Clear the error message after displaying -->
-        <?php endif; ?>
+          <!-- Display error message if it exists -->
+          <?php if(isset($_SESSION["error"])): ?>
+          <p><?php echo $_SESSION["error"]; ?></p>
+          <?php unset($_SESSION["error"]); ?> <!-- Clear the error message after displaying -->
+          <?php endif; ?>
 
-      <form name="login" class="login-form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-        <div class="input-group">
-          <label for="login-username">Username</label>
-          <input type="text" id="login-username" name="login-username" required>
-        </div>
-        <div class="input-group">
-          <label for="login-password">Password</label>
-          <input type="password" id="login-password" name="login-password" required>
-        </div>
-        <div class="input-group">
-          <a href="#" class="forgot-password">Forgot Password?</a>
-        </div>
-        <button type="submit" class="login-button" name="login">Login</button>
-      </form>
-      <p>Don't have an account? <a href="#" class="signup-link">Sign up</a></p>
+        <form name="login" class="login-form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+          <div class="input-group">
+            <label for="login-username">Username</label>
+            <input type="text" id="login-username" name="login-username" required>
+          </div>
+          <div class="input-group">
+            <label for="login-password">Password</label>
+            <input type="password" id="login-password" name="login-password" required>
+          </div>
+          <div class="input-group">
+            <a href="#" class="forgot-password">Forgot Password?</a>
+          </div>
+          <button type="submit" class="login-button" name="login">Login</button>
+        </form>
+        <p>Don't have an account? <a href="#" class="signup-link">Sign up</a></p>
+      </div>
     </div>
     <div class="signup-content" id="signup" style="display: none;">
       <h1>Sign Up</h1>
@@ -71,7 +83,7 @@ session_start(); // Start the session
       </form>
     </div>
   </div>
-  <script src="login_signup_script.js"></script>
+
 </body>
 </html>
 
