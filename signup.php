@@ -9,16 +9,7 @@ session_start(); // Start the session
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login or Sign Up</title>
   <link rel="stylesheet" href="signup.css">
-  <style>
-    /* Add the CSS for the login box here */
-    .login-box {
-      background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
-      border-radius: 10px; /* Rounded corners */
-      padding: 20px; /* Add padding */
-      margin: 50px auto; /* Center the box horizontally and add some top margin */
-      max-width: 400px; /* Limit the width of the box */
-    }
-  </style>
+  
 </head>
 
 <body>

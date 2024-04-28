@@ -28,10 +28,6 @@ body {
   width: 350px; /* Increased card width */
   color: #000000; /* Black color */
 }
-.login-form.username{
-  color: #000000;
-}
-
 
 /* Set the color of text elements inside the login box to black */
 .card h1,
@@ -95,11 +91,7 @@ button:hover {
   font-size: 16px; /* Increased font size for forgot password */
   color: rgb(0, 94, 255);
 }
-.container {
-  text-align: center; /* Centered "Forgot Password" */
-  font-size: 16px; /* Increased font size for forgot password */
-  color: aqua;
-}
+
 .login-content h1 {
   text-align: center;
   color: red; /* Change color to red */
@@ -114,11 +106,12 @@ button:hover {
 .signup-content h1 {
   text-align: center;
 }
+
 /* Change color of "Create an account" link to white */
 .login-signup-page .signup-link {
   color: #0424f5; /* White color */
-  
 }
+
 .login-box {
   background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
   border-radius: 10px; /* Rounded corners */
@@ -129,4 +122,50 @@ button:hover {
   display: flex; /* Use flexbox to align content vertically */
   flex-direction: column; /* Align content in a column */
   justify-content: space-between; /* Distribute space evenly between elements */
+  align-items: center; /* Center items horizontally */
 }
+
+@media only screen and (max-width: 768px) {
+  .container {
+    justify-content: flex-start; /* Align items at the start (left) */
+  }
+
+  .card {
+    width: 90%; /* Adjust card width for smaller screens */
+    margin-top: 30px; /* Add some top margin for spacing */
+  }
+ .login-signup-page {
+  position: relative;
+  height: 100vh;
+}
+
+.login-box {
+  background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+  border-radius: 10px; /* Rounded corners */
+  padding: 20px; /* Add padding */
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 400px; /* Limit the width of the box */
+}
+
+  h2 {
+    font-size: 30px; /* Decrease font size for smaller screens */
+    margin-bottom: 30px; /* Decrease margin for smaller screens */
+  }
+
+  form {
+    gap: 15px; /* Decrease gap between form elements for smaller screens */
+  }
+
+  input[type="text"],
+  input[type="password"] {
+    padding: 10px; /* Decrease input padding for smaller screens */
+    font-size: 14px; /* Decrease font size for smaller screens */
+  }
+
+  button {
+    padding: 12px 16px; /* Decrease button padding for smaller screens */
+    font-size: 14px; /* Decrease font size for smaller screens */
+  }
