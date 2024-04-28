@@ -122,7 +122,7 @@ session_start(); // Start the session
         // Send an AJAX request to addToCart.php to add the item to the cart
         const xhr = new XMLHttpRequest();
         const url = "addToCart.php";
-        const params = ItemID=${ItemID}&ItemName=${ItemName}&Price=${Price};
+        const params = `ItemID=${ItemID}&ItemName=${ItemName}&Price=${Price}`;
         xhr.open("POST", url, true);
         xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xhr.onload = function() {
