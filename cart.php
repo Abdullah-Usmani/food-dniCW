@@ -200,6 +200,7 @@ $totalAmount = 0;
 
   <script src="cart.js"></script>
   <script>
+    
     document.addEventListener("DOMContentLoaded", function() {
       const removeFromCartbuttons = document.querySelectorAll(".remove-from-cart");
       removeFromCartbuttons.forEach(button => {
@@ -236,45 +237,57 @@ $totalAmount = 0;
       }
     });
 
-      // Get the payment options select element
-      // Event listener for pay now button
-      document.getElementById("pay-now-button").addEventListener("click", function(event) {
-          event.preventDefault(); // Prevent default form submission
+    // Get the payment options select element
+    // Event listener for pay now button
+    document.getElementById("pay-now-button").addEventListener("click", function(event) {
+        event.preventDefault(); // Prevent default form submission
 
-          const phone = document.getElementById("phone").value;
-          const location = document.getElementById("location").value;
-          const paymentMethod = document.getElementById("payment-options").value;
+        const phone = document.getElementById("phone").value;
+        const location = document.getElementById("location").value;
+        const paymentMethod = document.getElementById("payment-options").value;
 
-          if (!phone || !location) {
-              // If phone or location is not filled out, display an error message
-              const messageElement = document.querySelector(".message");
-              messageElement.textContent = "Please fill out all fields!";
-              messageElement.style.display = "block";
-          } else {
-              // Check if the user is logged in and items are found in the cart
-              const loggedIn = "<?php echo $loggedIn; ?>";
-              const foundItems = "<?php echo $foundItems; ?>";
-              
-              if (loggedIn !== "1" || foundItems !== "1") {
-                  // If the user is not logged in or no items found in the cart, display an error message
-                  alert("Please log in or add items to your cart before proceeding with payment.");
-              } else {
-                  // Proceed with payment process based on payment method
-                  if (paymentMethod === "credit-debit") {
-                      // Redirect to payment.php for Credit/Debit Card payment
-                      const orderID = "<?php echo $OrderID; ?>";
-                      window.location.href = 'payment.php?OrderID=' + orderID;
-                  } else if (paymentMethod === "cash") {
-                      // Call the updateOrders function using AJAX
-                      const orderID = "<?php echo $OrderID; ?>";
-                      updateOrders(orderID);
-                  } else {
-                      // For other methods, just alert the values
-                      alert('Phone Number: ${phone}\nAddress: ${location}\nPayment Method: ${paymentMethod}');
-                  }
-              }
-          }
-      });
+        console.log("phone:", phone);
+        console.log("location:", location);
+        console.log("paymentMethod:", paymentMethod);
+
+        const loggedIn = "<?php echo $loggedIn; ?>";
+        const foundItems = "<?php echo $foundItems; ?>";
+        console.log("loggedIn:", loggedIn);
+        console.log("foundItems:", foundItems);
+
+        if (loggedIn !== "1" || foundItems !== "1") {
+            // If the user is not logged in or no items found in the cart, display an error message
+            alert("Please log in or add items to your cart before proceeding with payment.");
+        } 
+        else {
+            // Check if the user is logged in and items are found in the cart
+            if (!phone || !location) {
+            // If phone or location is not filled out, display an error message
+            const messageElement = document.querySelector(".message");
+            messageElement.textContent = "Please fill out all fields!";
+            messageElement.style.display = "block";
+
+            } 
+            else {
+                // Proceed with payment process based on payment method
+                if (paymentMethod === "credit-debit") {
+                    // Redirect to payment.php for Credit/Debit Card payment
+                    <?php $_SESSION['order_id'] = $OrderID; ?>
+                    const orderID = "<?php echo $OrderID ?>";
+                    console.log("orderID:", orderID);
+                    window.location.href = 'payment.php';
+                } else if (paymentMethod === "cash") {
+                    // Call the updateOrders function using AJAX
+                    const orderID = "<?php echo $OrderID; ?>";
+                    console.log("orderID:", orderID);
+                    updateOrders(orderID);
+                } else {
+                    // For other methods, just alert the values
+                    alert('Phone Number: ${phone}\nAddress: ${location}\nPayment Method: ${paymentMethod}');
+                }
+            }
+        }
+    });
 
 
       function updateOrders(OrderID) {

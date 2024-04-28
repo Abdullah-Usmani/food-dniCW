@@ -72,9 +72,10 @@ CREATE TABLE Payment (
     CustomerID INT NOT NULL,
     Price REAL NOT NULL DEFAULT 0.00,
     PaymentMethod VARCHAR(30) NOT NULL,
-    CardNumber INT(16),
+    CardNumber VARCHAR(16),
     ExpiryDate VARCHAR(5),
     CVV INT(3),
+    CONSTRAINT check_numeric_only CHECK (CardNumber REGEXP '^[0-9]+$'),
     FOREIGN KEY (OrderID) REFERENCES Orders(OrderID),
     FOREIGN KEY (CustomerID) REFERENCES Customer(CustomerID)
 );

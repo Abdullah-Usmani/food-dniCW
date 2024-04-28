@@ -169,11 +169,12 @@ function deleteOrderItem($id) {
 function displayCart($loggedIn, $userID) {}
 
 // ORDER/CART STUFF
-function createCardPayment($orderid, $customerid, $price, $cardNumber, $expiryDate, $cvv) {
+function createCardPayment($orderid, $customerid, $price, $method, $cardNumber, $expiryDate, $cvv) {
     global $conn;
-    $sql = "INSERT INTO Payment (OrderID, CustomerID, Price, PaymentMethod, CardNumber, ExpiryDate, CVV) VALUES (?, ?, ?, 'Card', ?, ?)";
-    $params = [$orderid, $customerid, $price, $cardNumber, $expiryDate, $cvv];
-
+    $sql = "INSERT INTO Payment (OrderID, CustomerID, Price, PaymentMethod, CardNumber, ExpiryDate, CVV) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    $params = [$orderid, $customerid, $price, $method, $cardNumber, $expiryDate, $cvv];
+    unset($_SESSION['order_id']); // Remove OrderID from session
+    header('Location: status.php'); // Redirect to success page
     return execPreparedStatement($sql, $params);
 }
 ?>
