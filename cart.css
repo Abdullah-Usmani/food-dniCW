@@ -1,13 +1,17 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background-color: #f5f5f5;
+  background-image: url(cart.png);
+  background-size: cover;
+  overflow: hidden;
+  filter: blur(0px);
+  background-color: transparent;
   color: #333;
 }
 
 .cart-page {
-  max-width: 800px;
-  margin: 20px auto;
+  max-width: 1000px;
+  margin: 40px auto;
   padding: 20px;
   background-color: #fff;
   border-radius: 5px;
@@ -94,7 +98,6 @@ h1 {
 .pay-button:hover {
   background-color: #0056b3;
 }
-/* Your existing CSS styles remain the same */
 
 .header {
   display: flex;

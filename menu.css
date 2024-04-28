@@ -1,14 +1,86 @@
+/* General styles */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
+  background-image: url(MENU.png); /* Replace with your image path */
+  background-size: cover; /* Ensure the background image covers the whole page */
+  background-attachment: fixed; /* Fix the background image */
+  background-color: #f2f2f2; /* Set a fallback background color */
+  color: #ffffff; /* Set text color to white */
+}
+
+.menu-container {
+  background-color: #4CAF50; /* Set green background color for menu items */
+  padding: 20px; /* Add padding for spacing */
+  border-radius: 10px; /* Add border radius for rounded corners */
+}
+
+.product-container {
+  display: flex;
+  flex-wrap: wrap; /* Allow items to wrap */
+  justify-content: center; /* Center items horizontally */
+}
+
+.main-item {
+  margin-top: 20px; /* Reduce margin for better spacing */
+  text-align: center;
+}
+
+.main-item img {
+  width: 300px; /* Adjust size as needed */
+  height: auto;
+}
+
+.main-item .description {
+  margin-top: 10px;
+}
+
+.small-items {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px; /* Reduce margin for better spacing */
+}
+
+.small-item {
+  margin: 0 10px;
+  text-align: center;
+}
+
+.small-item img {
+  width: 150px; /* Adjust size as needed */
+  height: auto;
+}
+
+.small-item .description {
+  margin-top: 10px;
+}
+
+.add-to-cart {
+  background-color: #fff; /* Change button background to white */
+  color: #4CAF50; /* Change button text color to green */
+  border: 2px solid #4CAF50; /* Add border with green color */
+  padding: 8px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin-top: 10px; /* Adjust margin for better spacing */
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.add-to-cart:hover {
+  background-color: #4CAF50; /* Change button background to green on hover */
+  color: #fff; /* Change button text color to white on hover */
 }
 
 header {
-  background-color: #333;
-  color: #fff;
+  background-color: rgba(242, 242, 242, 0); /* Completely transparent */
+  color: #fff; /* Text color white */
   text-align: center;
   padding: 20px 0;
+  position: relative; /* Ensure relative positioning for absolute positioning of buttons */
 }
 
 h1 {
@@ -17,6 +89,7 @@ h1 {
 
 .category {
   padding: 50px 20px;
+  text-align: center; /* Center align category heading */
 }
 
 h2 {
@@ -24,11 +97,71 @@ h2 {
 }
 
 footer {
-  background-color: #333;
+  background-color: #decf4e;
   color: #fff;
   text-align: center;
   padding: 20px 0;
-  position: fixed;
+  position: relative;
   width: 100%;
   bottom: 0;
+}
+
+.menu-item {
+  opacity: 90%;
+  background-color: #491133; /* Set background color for menu items */
+  padding: 20px; /* Add padding for spacing */
+  border-radius: 10px; /* Add border radius for rounded corners */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Add box shadow for depth */
+  margin: 10px; /* Adjust margin */
+  flex: 1 0 45%; /* Allow items to grow and shrink, and set initial width */
+  max-width: 300px; /* Set maximum width */
+}
+
+@media (min-width: 768px) {
+  .menu-item {
+    flex-basis: calc(33.33% - 20px); /* Set the width of each item to fit three in a row */
+  }
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px; /* Set maximum width for the container */
+  margin: 0 auto; /* Center the container horizontally */
+}
+
+.header-buttons {
+  text-align: right; /* Align buttons to the right */
+  position: absolute; /* Position buttons absolutely */
+  top: 100%; /* Align buttons below the header */
+  right: 0; /* Align buttons to the right */
+  margin-top: 10px; /* Add top margin to separate buttons from title */
+}
+
+.header-buttons button {
+  padding: 5px 10px; /* Adjust padding to make buttons smaller */
+  border: none;
+  background-color: transparent;
+  color: rgb(188, 178, 32);
+  font-size: medium; /* Adjust font size */
+  font-style: bold;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+h1 a {
+  color: #eccf3d; /* Change the color to your desired color code */
+  text-transform: uppercase; /* Transform text to uppercase */
+  text-decoration: none;
+}
+
+@media (max-width: 768px) {
+  header {
+    padding: 20px 10px; /* Reduce padding on smaller screens */
+  }
+
+  .header-buttons {
+    text-align: right; /* Align buttons to the right */
+    margin-bottom: 5px; /* Add margin to the bottom */
+    margin-top: 0px;
+  }
 }
