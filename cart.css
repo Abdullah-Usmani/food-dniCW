@@ -1,82 +1,87 @@
+/* menu.css */
+
 body {
-    background-color: #f2f2f2; /* Bright background color */
-    color: #333; /* Dark text color */
-  }
-  
-  .cart-page {
-    padding: 20px;
-  }
-  
-  .cart-items {
-    margin-bottom: 20px;
-  }
-  
-  .cart-item {
-    display: flex;
-    margin-bottom: 20px;
-  }
-  
-  .cart-item img {
-    width: 100px;
-    height: auto;
-    margin-right: 20px;
-  }
-  
-  .item-details h2 {
-    margin-top: 0;
-  }
-  
-  .cart-summary {
-    background-color: #fff; /* White background color */
-    padding: 20px;
-    border-radius: 10px;
-  }
-  
-  .payment-method label {
-    display: block;
-    margin-bottom: 10px;
-  }
-  
-  .payment-method select {
-    width: 100%;
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    background-color: #fff;
-    color: #333;
-    margin-bottom: 10px;
-  }
-  
-  .message {
-    color: #333;
-  }
-  
-  .user-info label {
-    display: block;
-    margin-bottom: 5px;
-  }
-  
-  .user-info input {
-    width: 100%;
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    background-color: #fff;
-    color: #333;
-    margin-bottom: 10px;
-  }
-  
-  .pay-button {
-    width: 100%;
-    padding: 10px;
-    background-color: #ff0000;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .pay-button:hover {
-    background-color: #cc0000;
-  }
-  
+  background-image: url("design-a-captivating-image-for-the-login-page-of-a-food-website-the-website-specializes-in-offering-511687922.png"); /* Replace "background-image.jpg" with the path to your image */
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed; /* To keep the background image fixed while scrolling */
+  background-color: #f2f2f2; /* Fallback background color */
+  color: #333; /* Dark text color */
+}
+
+.cart-page {
+  padding: 20px;
+}
+
+.cart-items {
+  margin-bottom: 20px;
+}
+
+.cart-item {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.cart-item img {
+  width: 100px;
+  height: auto;
+  margin-right: 20px;
+}
+
+.item-details h2 {
+  margin-top: 0;
+}
+
+.cart-summary {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.payment-method label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.payment-method select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.message {
+  color: #333;
+}
+
+.user-info label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.user-info input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.pay-button {
+  width: 100%;
+  padding: 10px;
+  background-color: #ff0000;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.pay-button:hover {
+  background-color: #cc0000;
+}
