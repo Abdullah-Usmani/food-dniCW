@@ -90,12 +90,11 @@ $totalAmount = 0;
                                         // Display item details
                                         $foundItems = true; // Set flag to true
                                         echo '<div class="cart-item">';
-                                        echo '<img src="food.jpg" alt="' . $row3['ItemName'] . '">';
+                                        echo '<img src="'. $row3["ImageURL"] . '" alt="' . $row3['ItemName'] . '">';
                                         echo '<div class="item-details">';
                                         echo '<h2>' . $row3['ItemName'] . '</h2>';
                                         echo '<p>OrderID: ' . $row2['OrderID'] . '</p>';
                                         echo '<p>OrderItemID: ' . $row2['OrderItemID'] . '</p>';
-                                        echo '<p>CustomerID: ' . $row1['CustomerID'] . '</p>';
                                         echo '<p>Price: $' . $row3['Price'] . '</p>';
                                         $subTotal += $row3['Price'];
                                         echo "<button class=\"remove-from-cart\" data-orderitemid=\"" . $row2["OrderItemID"] . "\"data-itemname=\"" . $row3["ItemName"] . "\">-</button>";
@@ -134,7 +133,7 @@ $totalAmount = 0;
                   $uniqueItems[$itemID] = array(
                       'ItemName' => $item['ItemName'],
                       'Price' => $item['Price'],
-                      'Quantity' => 1
+                      'ImageURL' => $item['ImageURL'],
                   );
               }
               
@@ -144,11 +143,10 @@ $totalAmount = 0;
 
             foreach($uniqueItems as $itemID => $item) {
                 echo '<div class="cart-item">';
-                echo '<img src="food.jpg" alt="' . $item['ItemName'] . '">';
+                echo '<img src="' . $item['ImageURL'] . '" alt="' . $item['ItemName'] . '">';
                 echo '<div class="item-details">';
                 echo '<h2>' . $item['ItemName'] . '</h2>';
-                echo '<p>Quantity: ' . $item['Quantity'] . '</p>';
-                echo '<p>Price: $' . $item['Price'] . ' each</p>';
+                echo '<p>Price: $' . $item['Price'] . '</p>';
                 echo '</div>';
                 echo '</div>';
               }
@@ -198,7 +196,6 @@ $totalAmount = 0;
     </div>
   </div>
 
-  <script src="cart.js"></script>
   <script>
     
     document.addEventListener("DOMContentLoaded", function() {

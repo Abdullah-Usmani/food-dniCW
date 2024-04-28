@@ -72,7 +72,7 @@ session_start(); // Start the session
                     echo "<h3><span class='item-name'>" . $row["ItemName"] . "</span></h3>"; // Wrap item name in a span element
                     echo "<p>" . $row["Description"] . "</p>";
                     echo "<p><span class='item-price'>$" . $row["Price"] . "</span></p>"; // Wrap price in a span element
-                    echo "<button class=\"add-to-cart\" data-itemid=\"" . $row["ItemID"] . "\" data-itemname=\"" . $row["ItemName"] . "\" data-price=\"" . $row["Price"] . "\">+</button>";
+                    echo "<button class=\"add-to-cart\" data-itemid=\"" . $row["ItemID"] . "\" data-itemname=\"" . $row["ItemName"] . "\" data-price=\"" . $row["Price"] . "\" data-imageurl=\"" . $row["ImageURL"] . "\">+</button>";
                     echo "</div>";
                     $itemCount++;
                     if ($itemCount % 2 == 0) {
@@ -112,17 +112,18 @@ session_start(); // Start the session
           const ItemID = button.dataset.itemid;
           const ItemName = button.dataset.itemname;
           const Price = button.dataset.price;
-          addToCart(ItemID, ItemName, Price);
+          const ImageURL = button.dataset.imageurl;
+          addToCart(ItemID, ItemName, Price, ImageURL);
           // Optionally, provide visual feedback to the user
           alert(ItemName + " added to cart");
         });
       });
 
-      function addToCart(ItemID, ItemName, Price) {
+      function addToCart(ItemID, ItemName, Price, ImageURL) {
         // Send an AJAX request to addToCart.php to add the item to the cart
         const xhr = new XMLHttpRequest();
         const url = "addToCart.php";
-        const params = `ItemID=${ItemID}&ItemName=${ItemName}&Price=${Price}`;
+        const params = `ItemID=${ItemID}&ItemName=${ItemName}&Price=${Price}&ImageURL=${ImageURL}`;
         xhr.open("POST", url, true);
         xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xhr.onload = function() {

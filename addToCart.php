@@ -3,17 +3,19 @@ include 'functions.php';
 session_start(); // Start or resume a session
 
 // Check if item details are received
-if(isset($_POST['ItemID'], $_POST['ItemName'], $_POST['Price'])) {
+if(isset($_POST['ItemID'], $_POST['ItemName'], $_POST['Price'], $_POST['ImageURL'])) {
     // Extract item details from the POST request
     $itemID = $_POST['ItemID'];
     $itemName = $_POST['ItemName'];
     $price = $_POST['Price'];
+    $imageURL = $_POST['ImageURL'];
 
     // Create a new item array
     $item = array(
         'ItemID' => $itemID,
         'ItemName' => $itemName,
-        'Price' => $price
+        'Price' => $price,
+        'ImageURL' => $imageURL
     );
 
     // Check if the cart session variable exists
