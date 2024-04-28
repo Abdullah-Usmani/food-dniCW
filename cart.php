@@ -132,7 +132,7 @@ $totalAmount = 0;
               } else {
                   $uniqueItems[$itemID] = array(
                       'ItemName' => $item['ItemName'],
-                      'Price' => $item['Price'],
+                      'Price' => $item['Price'],  
                       'ImageURL' => $item['ImageURL'],
                   );
               }
@@ -177,7 +177,6 @@ $totalAmount = 0;
     <div class="cart-summary">
       <h2>Cart Summary</h2>
       <div class="summary-details">
-        <p>Total Items: <?php echo count($_SESSION['cart'] ?? []); ?></p>
         <p>Subtotal: $<?php echo number_format($subTotal, 2); ?></p>
         <p>Tax (<?php echo ($taxRate * 100); ?>%): $<?php echo number_format($tax, 2); ?></p>
         <p>Shipping Cost: $<?php echo number_format($shippingCost, 2); ?></p>
