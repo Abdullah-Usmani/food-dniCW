@@ -18,10 +18,10 @@ session_start(); // Start the session
       <h1><a href="#">Desi Kitchen</a></h1>
     </div>
     <div class="header-buttons">
-      <button onclick="location.href='menu.php'">Main Menu</button>
-      <button onclick="location.href='cart.php'">Cart</button>
-      <button onclick="location.href='status.php'">Order Status</button>
-      <!-- Display USER INFO -->
+      <a href="menu.php"><img src="images/home.png" alt="Menu" class="black-icon" id="menu-icon"></a> <!-- Menu Icon -->
+      <a href="cart.php"><img src="images/cart.png" alt="Cart" class="black-icon" id="cart-icon"></a> <!-- Cart Icon -->
+      <a href="status.php"><img src="images/orderstatus.png" alt="Order Status" class="black-icon" id="status-icon"></a> <!-- Order Status Icon -->
+      <!-- Login Icon -->
       <?php
       if (isset($_SESSION["user_id"])) {
           $userID = $_SESSION["user_id"];
@@ -30,23 +30,22 @@ session_start(); // Start the session
             $loggedIn = true;
               while ($row = $result->fetch_assoc()) {
                   if ($row["CustomerID"] == $userID) {
-                    echo "<button>".$row["Username"]." ID - ".$row["CustomerID"]."</button>";
-                    echo "<button onclick=\"location.href='logout.php'\">Logout</button>";
+                    echo "<a href='logout.php'><img src='images/login.png' alt='Logout' class='black-icon' id='logout-icon'>".$row["Username"]." ID - ".$row["CustomerID"]."</a>";
                   }
               }
           }
           else {
-              echo "<p>User not logged in</p>";
-              echo "<button onclick=\"location.href='signup.php'\">Login</button>";
+            echo "<a href='signup.php'><img src='images/login.png' alt='Login' class='black-icon' id='login-icon'></a>";
           }
         }
       else {
-          echo "<button>User not logged in</button>";
-          echo "<button onclick=\"location.href='signup.php'\">Login</button>";
+        echo "<a href='signup.php'><img src='images/login.png' alt='Login' class='black-icon' id='login-icon'></a>";
       }
       ?>
     </div>
   </header>
+
+  <hr>
 
   <?php
   // Fetch all menu categories
@@ -55,40 +54,53 @@ session_start(); // Start the session
   // Check if categories exist
   if ($categories !== false && $categories->num_rows > 0) {
       // Loop through each category
-      while ($category = $categories->fetch_assoc()) {
-          echo "<section class='category' id='" . $category['CategoryName'] . "'>";
-          echo "<div class='container'>";
-          echo "<h2>" . $category['CategoryName'] . "</h2>";
+    while ($category = $categories->fetch_assoc()) {
+        echo "<section class='category' id='" . $category['CategoryName'] . "'>";
+        echo "<div class='container'>";
+        echo "<h2>" . $category['CategoryName'] . "</h2>";
 
-          // Fetch items for the current category
-          $result = readMenuItem();
-          if ($result !== false && $result->num_rows > 0) {
-              echo "<div class='product-container'>";
-              $itemCount = 0;
-              while ($row = $result->fetch_assoc()) {
-                  if ($row["CategoryID"] == $category["CategoryID"]) {
+        // Fetch items for the current category
+        $result = readMenuItem();
+        if ($result !== false && $result->num_rows > 0) {
+            $itemCount = 0;
+            echo "<div class='product-container carousel-container'>"; // Open the carousel-container here
+            echo "<div class='carousel'>"; // Open the carousel here
+
+            while ($row = $result->fetch_assoc()) {
+                if ($row["CategoryID"] == $category["CategoryID"]) {
                     echo "<div class='menu-item'>";
                     echo "<img src='" . $row["ImageURL"] . "' alt='" . $row["ItemName"] . "' width='300' height='200' />";
-                    echo "<h3><span class='item-name'>" . $row["ItemName"] . "</span></h3>"; // Wrap item name in a span element
+                    echo "<h3><span class='item-name'>" . $row["ItemName"] . "</span></h3>";
                     echo "<p>" . $row["Description"] . "</p>";
-                    echo "<p><span class='item-price'>$" . $row["Price"] . "</span></p>"; // Wrap price in a span element
+                    echo "<p><span class='item-price'>$" . $row["Price"] . "</span></p>";
+                    echo "<div class='add-to-cart-container'>"; // Add this line
                     echo "<button class=\"add-to-cart\" data-itemid=\"" . $row["ItemID"] . "\" data-itemname=\"" . $row["ItemName"] . "\" data-price=\"" . $row["Price"] . "\" data-imageurl=\"" . $row["ImageURL"] . "\">+</button>";
+                    echo "</div>"; // Add this line
                     echo "</div>";
                     $itemCount++;
-                    if ($itemCount % 2 == 0) {
-                      echo "</div><div class='product-container'>"; // Start new row after every 2 items
-                    }
-                  }
-              }
-              echo "</div>"; // Close product container
-          }
-          else {
-              echo "<p>No records found.</p>";
-          }
-          echo "</div>"; // Close container
-          echo "</section>";
+                }
+            }
+
+          echo "</div>"; // Close carousel
+          echo "</div>"; // Close product-container
+          // Add previous and next buttons with images for each category
+          echo "<div class='button-container'>";
+          echo "<button class='prev'><img src='images/previous.png' alt='Previous'></button>";
+          echo "<button class='next'><img src='images/next.png' alt='Next'></button>";
+          echo "</div>"; // Close button-container
+        } else {
+          echo "<p>No records found.</p>";
       }
-  } else {
+
+      echo "</div>"; // Close the container
+      echo "</section>";
+
+      if ($category !== end($category)) {
+          echo "<hr>"; // Add hr break after each category except the last one
+      }
+    }
+  }
+    else {
       // If no categories found
       echo "<section class='category'>";
       echo "<div class='container'>";
@@ -99,13 +111,58 @@ session_start(); // Start the session
   ?>
 
   <footer>
-    <div class="container">
+    <div class="footer-container">
       <p>© 2024 Desi Kitchen. All rights reserved.</p>
     </div>
   </footer>
 
   <script>
     document.addEventListener("DOMContentLoaded", function() {
+      // Select all carousel containers
+      var carousels = document.querySelectorAll('.carousel-container');
+
+      // Loop through each carousel
+      carousels.forEach(function(carousel) {
+        // Select carousel and items
+        var carouselEl = carousel.querySelector('.carousel');
+        var items = carousel.querySelectorAll('.menu-item');
+        
+        // Set initial index and item width
+        var currentIndex = 0;
+        var itemWidth = items[0].offsetWidth + parseInt(window.getComputedStyle(items[0]).marginRight);
+
+        // Set width of carousel based on number of items
+        carouselEl.style.width = itemWidth * items.length + 'px';
+
+        // Function to handle moving carousel
+        function moveCarousel(index) {
+          // Calculate translateX value to move carousel
+          var translateX = -index * itemWidth;
+          carouselEl.style.transform = 'translateX(' + translateX + 'px)';
+          currentIndex = index;
+          console.log('Current index:', currentIndex); // Log current index
+        }
+
+        // Move carousel to display the leftmost item first
+        moveCarousel(-1.5);
+
+        // Add event listeners for previous and next buttons within the carousel's parent
+        var prevButton = carousel.parentElement.querySelector('.prev'); // Get the previous button within the parent element
+        var nextButton = carousel.parentElement.querySelector('.next'); // Get the next button within the parent element
+
+        prevButton.addEventListener('click', function() {
+          console.log('Previous button clicked');
+          if (currentIndex > -1.5) {
+            moveCarousel(currentIndex - 1);
+          }
+    });
+    nextButton.addEventListener('click', function() {
+      console.log('Next button clicked');
+      if (currentIndex < items.length - 3) { // Change condition to prevent going beyond the last item
+        moveCarousel(currentIndex + 1);
+      }
+    });
+  });
       const addToCartButtons = document.querySelectorAll(".add-to-cart");
       addToCartButtons.forEach(button => {
         button.addEventListener("click", function(event) {

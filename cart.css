@@ -1,11 +1,11 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background-image: url(cart.png);
+background-color: #135D66;
   background-size: cover;
   overflow: hidden;
   filter: blur(0px);
-  background-color: transparent;
+  background-color: #135D66 ;
   color: #333;
 }
 
@@ -13,7 +13,7 @@ body {
   max-width: 1000px;
   margin: 40px auto;
   padding: 20px;
-  background-color: #fff;
+  background-color: #E3FEF7;
   border-radius: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
