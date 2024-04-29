@@ -44,15 +44,11 @@ session_start(); // Start the session
               foreach($_SESSION['cart'] as $item) {
                   // Add the item to the uniqueItems array or update its quantity
                   $itemID = $item['ItemID'];
-                  if(isset($uniqueItems[$itemID])) {
-                      $uniqueItems[$itemID]['Quantity']++;
-                  } else {
-                      $uniqueItems[$itemID] = array(
-                          'ItemName' => $item['ItemName'],
-                          'Price' => $item['Price'],
-                          'ImageURL' => $item['ImageURL'],
-                      );
-                  }
+                  $uniqueItems[$itemID] = array(
+                  'ItemName' => $item['ItemName'],
+                  'Price' => $item['Price'],
+                  'ImageURL' => $item['ImageURL'],
+                  );
                 }
             }
         ?>
@@ -90,7 +86,7 @@ session_start(); // Start the session
             <label for="signup-password">Password</label>
             <input type="password" id="signup-password" name="signup-password" required>
           </div>
-          <button type="submit" class="signup-button">Sign Up</button>
+          <button type="submit" class="signup-button"  name="signup">Sign Up</button>
         </form>
 
         <p>Already have an account? <a href="#" class="login-link">Login</a></p>
@@ -161,7 +157,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["signup"])) {
     $email = $_POST["signup-email"];
     $pass = $_POST["signup-password"];
 
-    $result = createCustomer($user, $pass, $email, NULL, NULL);
-
+    createCustomer($user, $pass, $email, NULL, NULL);
 }
 ?>

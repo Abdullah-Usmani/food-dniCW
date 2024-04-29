@@ -111,7 +111,6 @@ CREATE TABLE Payment (
     PaymentID INT PRIMARY KEY AUTO_INCREMENT,
     OrderID INT NOT NULL,
     CustomerID INT NOT NULL,
-    Price REAL NOT NULL DEFAULT 0.00,
     PaymentMethod VARCHAR(30) NOT NULL,
     CardNumber VARCHAR(16),
     ExpiryDate VARCHAR(5),

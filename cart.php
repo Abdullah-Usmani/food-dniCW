@@ -41,34 +41,39 @@ $totalAmount = 0;
   <div class="cart-page">
   <div class="header">
       <h1>My Cart</h1>
-        <div class="header-buttons">
-          <button id="view-cart-button" class="header-button" onclick="location.href='cart.php'">View Cart</button>
-          <button id="main-menu-button" class="header-button" onclick="location.href='menu.php'">Main Menu</button>
-          <button id="order-status-button" class="header-button" onclick="location.href='status.php'">Order Status</button>
-          <?php
-          if (isset($_SESSION["user_id"])) {
-              $userID = $_SESSION["user_id"];
-              $result = readCustomer();
-              if ($result !== false && $result->num_rows > 0) {
-                $loggedIn = true;
-                  while ($row = $result->fetch_assoc()) {
-                      if ($row["CustomerID"] == $userID) {
-                        echo "<button>".$row["Username"]." ID - ".$row["CustomerID"]."</button>";
-                        echo "<button onclick=\"location.href='logout.php'\">Logout</button>";
-                      }
-                  }
-              }
-              else {
-                  echo "<p>User not logged in</p>";
-                  echo "<button onclick=\"location.href='signup.php'\">Login</button>";
-              }
-            }
-          else {
-              echo "<button>User not logged in</button>";
-              echo "<button onclick=\"location.href='signup.php'\">Login</button>";
+      <div class="header-buttons">
+      <button class="header-button" onclick="location.href='menu.php'">
+        <img src="images/home.png" alt="Main Menu">
+    </button>
+    <button class="header-button" onclick="location.href='cart.php'">
+        <img src="images/cart.png" alt="View Cart">
+    </button>
+    
+    <button class="header-button" onclick="location.href='status.php'">
+        <img src="images/orderstatus.png" alt="Order Status">
+    </button>
+    <?php
+if (isset($_SESSION["user_id"])) {
+    $userID = $_SESSION["user_id"];
+    $result = readCustomer();
+    if ($result !== false && $result->num_rows > 0) {
+      $loggedIn = true;
+      while ($row = $result->fetch_assoc()) {
+          if ($row["CustomerID"] == $userID) {
+              echo "<button class='header-button' onclick=\"location.href='logout.php'\"><img src='images/login.png' alt='Logout'></button>";
+              echo "<p>" . $row["Username"] . " ID - " . $row["CustomerID"] . "</p>";
           }
-          ?>
-        </div>
+      }
+  } else {
+    echo "<button class='header-button' onclick=\"location.href='signup.php'\"><img src='images/login.png' alt='Logout'></button>";
+    echo "<p>User not logged in</p>";
+  }
+} else {
+  echo "<button class='header-button' onclick=\"location.href='signup.php'\"><img src='images/login.png' alt='Logout'></button>";
+  echo "<p>User not logged in</p>";
+}
+?>
+</div>
       </div>
       <div class="cart-items">
         <?php
@@ -127,16 +132,12 @@ $totalAmount = 0;
           foreach($_SESSION['cart'] as $item) {
               // Add the item to the uniqueItems array or update its quantity
               $itemID = $item['ItemID'];
-              if(isset($uniqueItems[$itemID])) {
-                  $uniqueItems[$itemID]['Quantity']++;
-              } else {
-                  $uniqueItems[$itemID] = array(
-                      'ItemName' => $item['ItemName'],
-                      'Price' => $item['Price'],  
-                      'ImageURL' => $item['ImageURL'],
-                  );
-              }
-              
+              $uniqueItems[$itemID] = array(
+              'ItemName' => $item['ItemName'],
+              'Price' => $item['Price'],  
+              'ImageURL' => $item['ImageURL'],
+              );
+          
               // Calculate the subtotal for each item (price * quantity)
               $subTotal += $item['Price'];
           }
@@ -191,7 +192,7 @@ $totalAmount = 0;
         <p>Total Amount: $<?php echo number_format($totalAmount, 2); ?></p>
       </div>
     <p class="message" style="display:none;"></p>
-      <button id="pay-now-button" class="header-button">Pay now</button>
+    <button id="pay-now-button" class="pay-button">Pay now</button>
     </div>
   </div>
 
@@ -210,6 +211,7 @@ $totalAmount = 0;
       });
       
       function deleteOrder(OrderItemID) {
+        // Send an AJAX request to addToCart.php to remove the item from the cart
         const xhr = new XMLHttpRequest();
         const url = "removeFromCart.php";
         const params = `OrderItemID=${OrderItemID}`;

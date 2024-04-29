@@ -2,10 +2,12 @@
 include 'functions.php';
 session_start(); // Start the session
 
+// Default to 0 if OrderID || UserID not present in the session, price defaults to 2.5
 $UserID = $_SESSION['user_id'] ?? 0;
-$OrderID = $_SESSION['order_id'] ?? 0; // Default to 0 if OrderID is not present in the session
+$OrderID = $_SESSION['order_id'] ?? 0; 
 $price = 2.5;
 
+// Grab POST variables to be used in payment function
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["payment"])) {
   $phoneNumber = $_POST["phone-number"];
   $amount = $_POST["amount"];
@@ -22,8 +24,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["payment"])) {
   } 
   
   else {
-      // Process the payment
-      sendOrders($OrderID, 1); // Assuming this function sends the order
+      // Convert the cart to an oder receipt (adjusting the status of the order record)
+      sendOrders($OrderID, 1); 
       createCardPayment($OrderID, $UserID, $price, 'Card', $cardNumber, $expiryDate, $cvv);
       exit();
   }
@@ -36,9 +38,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["payment"])) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Enter Payment Details</title>
-  <link rel="stylesheet" href="payment_details.css">
+  <link rel="stylesheet" href="payment.css">
 </head>
 <body>
+  <!-- Payment Details with form -->
   <div class="payment-details-page">
     <h1>Payment Details</h1>
     <form name="payment" class="payment-details-form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
@@ -55,10 +58,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["payment"])) {
         <input type="tel" id="phone-number" name="phone-number" required>
       </div>
       <div class="input-group">
-        <label for="amount">Amount to Pay</label>
-        <input type="number" id="amount" name="amount" required>
-      </div>
-      <div class="input-group">
         <label for="card-number">Card Number</label>
         <input type="number" id="card-number" name="card-number" maxlength="16" required>
       </div>
@@ -70,6 +69,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["payment"])) {
         <label for="cvv">CVV</label>
         <input type="number" id="cvv" name="cvv" maxlength="3" required>
       </div>
-      <button id="view-cart-button" class="header-button" type='submit' name="payment">Pay now</button>
+      <button id="view-cart-button" class="pay-button" type='submit' name="payment">Pay now</button>
     </form>
   </div>

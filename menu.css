@@ -1,13 +1,12 @@
 /* General styles */
 body {
-  font-family: Arial, sans-serif;
+  font-family: "Roboto", cursive; /* Use cursive font */
+  background-color: #003C43; /* Set the desired background color */
   margin: 0;
   padding: 0;
-  background-color: #003C43; /* Replace with your image path */
   opacity: 100%;
   background-size: cover; /* Ensure the background image covers the whole page */
   background-attachment: fixed; /* Fix the background image */
-  background-color: #003C43; /* Set a fallback background color */
   color: #ffffff; /* Set text color to white */
 }
 
@@ -18,13 +17,8 @@ hr {
   width: 80%; /* Adjust width as needed */
 }
 
-.header-buttons img.black-icon {
-  filter: grayscale(100%) !important;
-  width: 30px; /* Adjust width as needed */
-  height: 30px; /* Adjust height as needed */
-}
-
 .menu-container {
+  position: relative;
   background-color: #4CAF50; /* Set green background color for menu items */
   padding: 20px; /* Add padding for spacing */
   border-radius: 10px; /* Add border radius for rounded corners */
@@ -71,18 +65,19 @@ hr {
 }
 
 .add-to-cart {
-  background-color: #fff; /* Change button background to white */
-  color: #4CAF50; /* Change button text color to green */
-  border: 2px solid #4CAF50; /* Add border with green color */
-  padding: 8px 16px;
+  position: absolute;
+  bottom: 10px; /* Adjust the distance from the bottom */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #fff;
+  color: #4CAF50;
+  border: 2px solid #4CAF50;
+  padding: 4px 8px;
   text-align: center;
   text-decoration: none;
-  display: inline-block;
   font-size: 14px;
-  margin-top: 10px; /* Adjust margin for better spacing */
   cursor: pointer;
   border-radius: 4px;
-  margin: 0 0;
 }
 
 .add-to-cart:hover {
@@ -91,18 +86,18 @@ hr {
 }
 
 /* Center the Desi Kitchen text */
+
 h1 {
   text-align: center;
+  letter-spacing: 8px; /* Adjust the spacing between letters */
   margin: 0;
   padding: 0;
 }
-
 /* Center the add-to-cart buttons */
 
-.add-to-cart-container {
-  text-align: center; /* Center align the content */
-}
+
 .container {
+  position: relative;
   width: 100%;
   max-width: 1200px; /* Set maximum width for the container */
   margin: 0 auto; /* Center the container horizontally */
@@ -112,21 +107,29 @@ h1 {
 }
 
 .header-buttons {
-  display: inline; /* Set the display property to inline */
-  text-align: center; /* Center the buttons horizontally */
+  display: flex;
+  justify-content: flex-end; /* Align buttons to the right */
+  align-items: center; /* Center vertically */
 }
 
-.header-buttons button {
-  padding: 5px 10px; /* Adjust padding to increase button size */
-  margin: 0 5px; /* Adjust margin to decrease space between buttons */
-  border: none;
-  background-color: #ffffff; /* Change background color to white */
-  color: #ffffff; /* Change text color to white */
-  font-size: medium; /* Adjust font size to increase button size */
-  font-style: bold;
-  cursor: pointer;
-  border-radius: 2px;
+.header-buttons a {
+  margin: 0 10px; /* Adjust the margins to separate the icons */
 }
+
+.header-buttons img.black-icon {
+  width: 40px; /* Increase the width of the icons */
+  height: 40px; /* Increase the height of the icons */
+  margin: 15px 20px; /* Adjust margin to separate the icons and bring them down */
+  filter: brightness(0) invert(1);
+}
+
+.header-buttons img:hover {
+  transform: scale(1.1);
+}
+.header-buttons a:hover {
+  transform: scale(1.1);
+}
+
 h1 a {
   color: #eccf3d; /* Change the color to your desired color code */
   text-transform: uppercase; /* Transform text to uppercase */
@@ -186,13 +189,16 @@ h1 a {
 
 .menu-item h3,
 .menu-item p {
+  font-family: "Roboto"; /* Use cursive font */
+  font-weight: normal; /* Set font weight to normal */
   text-align: center;
   margin: 10px;
 }
-.custom-card {
-  background-color: #521039; /* Change the background color to your desired color */
+
+.food-item {
+  background-color: #77B0AA; /* Change the background color to your desired color */
   border-radius: 10px; /* Add border-radius for rounded corners */
-  padding: 20px; /* Add padding for spacing inside the card */
+  padding: 30px; /* Increase padding for spacing inside the card */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add box shadow for depth effect */
 }
 
@@ -205,19 +211,7 @@ h1 a {
   position: relative; /* Ensure the category container is a positioned parent */
 }
 
-.prev, .next {
-  position: absolute !important;
-  top: 50% !important;
-  transform: translateY(-50%) !important;
-}
 
-.prev {
-  left: 10px !important; /* Adjust the distance from the left side */
-}
-
-.next {
-  right: 10px !important; /* Adjust the distance from the right side */
-}
 footer {
   background-color: #135D66; /* Change the background color of the footer */
   text-align: center;
@@ -226,4 +220,58 @@ footer {
 
 .footer-container {
   padding: 20px; /* Add padding for spacing */
+}
+.prev,
+.next {
+  position: absolute !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  background: #fff; /* Set background color */
+  border: 2px solid #3437eb; /* Add border */
+  border-radius: 50%; /* Make it a circle */
+  width: 40px; /* Set width */
+  height: 40px; /* Set height */
+}
+
+.prev {
+  left: 10px !important; /* Adjust the distance from the left side */
+}
+
+.next {
+  font-size: 10px; /* Adjust the font size as needed */
+  right: 5px !important; /* Adjust the distance from the right side */
+}
+.menu-item,
+.custom-card,
+.food-item {
+  position: relative;
+}
+.menu-item:hover,
+.custom-card:hover,
+.food-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+.add-to-cart,
+.signup-button,
+.login-button {
+  transition: background-color 0.3s ease;
+}
+
+.add-to-cart:hover,
+.signup-button:hover,
+.login-button:hover {
+  background-color: #3437eb;
+  color: #ffffff;
+}
+.custom-card,
+.food-item {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+.footer-container a {
+  transition: color 0.3s ease;
+}
+
+.footer-container a:hover {
+  color: #eccf3d;
 }

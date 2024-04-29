@@ -6,6 +6,9 @@ session_start(); // Start the session
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=The+Nautigal:wght@400;700&display=swap" rel="stylesheet">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Menu - Desi Kitchen</title>
@@ -21,8 +24,9 @@ session_start(); // Start the session
       <a href="menu.php"><img src="images/home.png" alt="Menu" class="black-icon" id="menu-icon"></a> <!-- Menu Icon -->
       <a href="cart.php"><img src="images/cart.png" alt="Cart" class="black-icon" id="cart-icon"></a> <!-- Cart Icon -->
       <a href="status.php"><img src="images/orderstatus.png" alt="Order Status" class="black-icon" id="status-icon"></a> <!-- Order Status Icon -->
-      <!-- Login Icon -->
+      <!-- Login / Logout Icon -->
       <?php
+      // Display USERID & Logout button if logged in, else display USER NOT LOGGED IN & Login button
       if (isset($_SESSION["user_id"])) {
           $userID = $_SESSION["user_id"];
           $result = readCustomer();
@@ -30,18 +34,22 @@ session_start(); // Start the session
             $loggedIn = true;
               while ($row = $result->fetch_assoc()) {
                   if ($row["CustomerID"] == $userID) {
-                    echo "<a href='logout.php'><img src='images/login.png' alt='Logout' class='black-icon' id='logout-icon'>".$row["Username"]." ID - ".$row["CustomerID"]."</a>";
+                    echo "<a href='logout.php'><img src='images/login.png' alt='Logout' class='black-icon' id='logout-icon'></a>";
+                    echo "<p>". $row["Username"]." ID - ".$row["CustomerID"] . "</p>";
                   }
-              }
+                }
           }
           else {
             echo "<a href='signup.php'><img src='images/login.png' alt='Login' class='black-icon' id='login-icon'></a>";
+            echo "<p>User Not Logged In</p>";
           }
         }
-      else {
-        echo "<a href='signup.php'><img src='images/login.png' alt='Login' class='black-icon' id='login-icon'></a>";
+        else {
+          echo "<a href='signup.php'><img src='images/login.png' alt='Login' class='black-icon' id='login-icon'></a>";
+          echo "<p>User Not Logged In</p>";
       }
       ?>
+
     </div>
   </header>
 

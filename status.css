@@ -4,6 +4,12 @@ body {
   padding: 0;
   background-color: #77B0AA; /* Light background color */
 }
+.header-buttons img {
+  width: 40px; /* Increase the width of the icons */
+  height: 40px; /* Increase the height of the icons */
+  margin: 15px 10px; /* Adjust margin to separate the icons and bring them down */
+  filter: brightness(0) invert(0); /* Make the images black */
+}
 
 .order-status {
   max-width: 600px;
@@ -77,8 +83,12 @@ body {
   padding: 10px; /* Adjust padding as needed */
   background-color: #333; /* Sample background color */
   color: #fff; /* Sample text color */
+  margin: 0px;
 }
-
+.container {
+  width: 90%;
+  margin: 0 auto !important; /* Remove margin to align the container to the center */
+}
 .action-buttons {
   display: flex;
 }

@@ -25,15 +25,13 @@ function execPreparedStatement($sql, $params) {
     // Return the result
     return $result;
 }
+
+// CUSTOMERS CRUD
 function createCustomer($user, $pass, $email, $name, $number) {
     global $conn;
     $sql = "INSERT INTO Customer (Username, Password, Email, Name, PhoneNumber) VALUES (?, ?, ?, ?, ?)";
     $params = [$user, $pass, $email, $name, $number];
 
-        // Debugging: Display SQL query and parameters
-        echo "SQL: $sql<br>";
-        echo "Params: " . implode(", ", $params) . "<br>";
-        
     return execPreparedStatement($sql, $params);
 }
 function readCustomer() {
@@ -48,6 +46,8 @@ function updateCustomer($id, $user, $pass, $email, $name, $number) {
     
     return execPreparedStatement($sql, $params);
 }
+
+// Function for deleting account
 function deleteCustomer($id) {
     global $conn;
     $sql = "DELETE FROM Customer WHERE CustomerID=?";
@@ -55,6 +55,7 @@ function deleteCustomer($id) {
     return execPreparedStatement($sql, $params);
 }
 
+// Used during login, returns true if the inputted user & pass are correct
 function loginCustomer($username, $password) {
     global $conn;
     $sql = "SELECT * FROM Customer WHERE Username = ? AND Password = ?";
@@ -62,7 +63,7 @@ function loginCustomer($username, $password) {
     return execPreparedStatement($sql, $params);
 }
 
-// MENU STUFF
+// MENU INDIVIDUAL ITEMS CRUD
 function createMenuItem($catid, $name, $desc, $url, $price, $status) {
     global $conn;
     $sql = "INSERT INTO MenuItem (CategoryID, ItemName, Description, ImageURL, Price, AvailabilityStatus) VALUES (?, ?, ?, ?, ?, ?)";
@@ -89,7 +90,7 @@ function deleteMenuItem($id) {
     return execPreparedStatement($sql, $params);
 }
 
-// CATEGORIES STUFF
+// CATEGORIES CRUD
 function readMenuCategories() {
     global $conn;
     $sql = "SELECT * FROM MenuCategory";
@@ -104,7 +105,7 @@ function readMenuItemByCategories() {
     return execPreparedStatement($sql, []);
 }
 
-// ORDER/CART STUFF
+// ORDER/CART CRUD
 function createOrders($customerid, $datetime, $price, $status) {
     global $conn;
     $sql = "INSERT INTO Orders (CustomerID, OrderDateTime, Price, OrderStatus) VALUES (?, ?, ?, ?)";
@@ -118,7 +119,6 @@ function readOrders($direction = "ASC") {
     return execPreparedStatement($sql, []);
 }
 
-// Update CART --> ORDERED, PRICE --> PRICE, DATE --> DATE
 function updateOrders($id, $customerid, $datetime, $price, $status) {
     global $conn;
     $sql = "UPDATE Orders SET CustomerID=?, OrderDateTime=?, Price=?, OrderStatus=? WHERE OrderID=?";
@@ -127,6 +127,7 @@ function updateOrders($id, $customerid, $datetime, $price, $status) {
     return execPreparedStatement($sql, $params);
 }
 
+// WHEN STATUS SET TO 1 - CHANGES FROM ACTING AS A CART INTO A ORDER RECEIPT
 function sendOrders($id, $status) {
     global $conn;
     $sql = "UPDATE Orders SET OrderStatus=? WHERE OrderID=?";
@@ -141,7 +142,7 @@ function deleteOrders($id) {
     return execPreparedStatement($sql, $params);
 }
 
-// ORDER/CART STUFF
+// ORDER INDIVIDUAL ITEMS CRUD
 function createOrderItem($orderid, $itemid) {
     global $conn;
     $sql = "INSERT INTO OrderItem (OrderID, ItemID) VALUES (?, ?)";
@@ -154,8 +155,6 @@ function readOrderItem() {
     $sql = "SELECT * FROM OrderItem";
     return execPreparedStatement($sql, []);
 }
-
-// Update CART --> ORDERED, PRICE --> PRICE, DATE --> DATE
 function updateOrderItem($id,$orderid, $itemid) {
     global $conn;
     $sql = "UPDATE OrderItem SET OrderID=?, ItemID=?, WHERE OrderItemID=?";
@@ -169,9 +168,7 @@ function deleteOrderItem($id) {
     $params = [$id];
     return execPreparedStatement($sql, $params);
 }
-function displayCart($loggedIn, $userID) {}
-
-// ORDER/CART STUFF
+// PAYMENT CRUD
 function createCardPayment($orderid, $customerid, $price, $method, $cardNumber, $expiryDate, $cvv) {
     global $conn;
     $sql = "INSERT INTO Payment (OrderID, CustomerID, Price, PaymentMethod, CardNumber, ExpiryDate, CVV) VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -181,6 +178,7 @@ function createCardPayment($orderid, $customerid, $price, $method, $cardNumber, 
     return execPreparedStatement($sql, $params);
 }
 
+// SPECIAL FUNCTION FOR IF A USER LOGS IN, AND THERE ARE ITEMS IN THE SESSION CART, ADD THEM TO USER'S CART AFTER LOGIN
 function tempToCart($userID, $itemID, $itemName, $price) {
     global $conn;
     
@@ -212,7 +210,6 @@ function tempToCart($userID, $itemID, $itemName, $price) {
             }
         }
     }
-
         
     // if no ORDER exists at all
     else {

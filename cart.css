@@ -3,10 +3,76 @@ body {
   font-family: Arial, sans-serif;
 background-color: #135D66;
   background-size: cover;
-  overflow: hidden;
+  --overflow: hidden;
   filter: blur(0px);
   background-color: #135D66 ;
   color: #333;
+}
+.header-buttons img {
+  width: 40px;
+  height: 40px;
+  margin: 15px 20px;
+  filter: brightness(0) invert(0);
+  cursor: pointer;
+}
+
+.header-buttons img:hover {
+  transform: scale(1.1);
+}
+
+/* Apply styles specifically to the login button */
+.header-buttons .login-button {
+  width: 40px;
+  height: 40px;
+  margin: 25px 20px; /* Adjust margin-top to move the button down */
+  filter: brightness(0) invert(0);
+  cursor: pointer;
+  outline: none; /* Remove default focus outline */
+}
+
+/* Add background color on hover for the login button */
+.header-buttons .login-button:hover {
+  background-color: #555;
+  transform: scale(1.1);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 10px; /* Adjust padding */
+  background-color: #f2f2f2;
+  height: 50px; /* Adjust height */
+  margin-bottom: 20px;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 18px; /* Adjust font size */
+}
+
+.header-buttons {
+  display: flex;
+  gap: 5px; /* Adjust gap between buttons */
+}
+
+.header-button {
+  background-color: transparent;
+  color: white;
+  padding: 5px 10px; /* Adjust padding */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-size: 12px; /* Adjust font size */
+}
+
+.header-button:hover {
+  background-color: #555;
+}
+.header-buttons .login-button:hover {
+  background-color: transparent;
+  color: #555;
 }
 
 .cart-page {
@@ -86,8 +152,8 @@ h1 {
 }
 
 .pay-button {
-  background-color: #007bff;
-  color: #fff;
+  background-color: #000000; /* Change background color to black */
+  color: #ffffff; /* Change text color to white */
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
@@ -99,33 +165,3 @@ h1 {
   background-color: #0056b3;
 }
 
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 20px;
-  background-color: #f2f2f2;
-}
-
-.header h1 {
-  margin: 0;
-}
-
-.header-buttons {
-  display: flex;
-  gap: 10px;
-}
-
-.header-button {
-  background-color: #333;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.header-button:hover {
-  background-color: #555;
-}
