@@ -1,4 +1,4 @@
--- Active: 1712127514804@@127.0.0.1@3306@desikitchen
+-- Active: 1712127514804@@127.0.0.1@3306
 CREATE DATABASE DesiKitchen
     DEFAULT CHARACTER SET = 'utf8mb4';
 
@@ -22,10 +22,6 @@ USE DesiKitchen;
 --     CONSTRAINT check_phone_number CHECK (PhoneNumber LIKE '00%')
 -- );
 
-DROP TABLE Customer;
-DROP TABLE Orders;
-DROP TABLE OrderItem;
-DROP TABLE Payment;
 CREATE TABLE Customer (
     CustomerID INT PRIMARY KEY AUTO_INCREMENT,
     Username VARCHAR(30) NOT NULL UNIQUE,
@@ -33,7 +29,8 @@ CREATE TABLE Customer (
     Email TEXT NOT NULL UNIQUE,
     Name TEXT,
     Address VARCHAR(50),
-    PhoneNumber INT UNIQUE);
+    PhoneNumber INT UNIQUE
+    );
 
 -- Menu Categories
 CREATE TABLE MenuCategory (

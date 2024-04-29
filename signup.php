@@ -28,10 +28,11 @@ session_start(); // Start the session
       <div class="login-content" id="login">
         <h1>Login</h1>
 
-          <!-- Display error message if it exists -->
-          <?php if(isset($_SESSION["error"])): ?>
+        <!-- Display error message if it exists -->
+        <?php if(isset($_SESSION["error"])): ?>
           <p><?php echo $_SESSION["error"]; ?></p>
           <?php unset($_SESSION["error"]); ?> <!-- Clear the error message after displaying -->
+        
           <?php endif; ?>
 
           <?php
@@ -68,41 +69,43 @@ session_start(); // Start the session
           <div class="input-group">
             <a href="#" class="forgot-password">Forgot Password?</a>
           </div>
-            <button type="submit" class="login-button" name="login">Login</button>
+          <button type="submit" class="login-button" name="login">Login</button>
         </form>
         <p>Don't have an account? <a href="#" class="signup-link">Sign up</a></p>
       </div>
-    </div>
-    <div class="signup-content" id="signup" style="display: none;">
-      <h1>Sign Up</h1>
 
-      <form name="signup" class="signup-form" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-        <div class="input-group">
-          <label for="signup-username">Username</label>
-          <input type="text" id="signup-username" name="signup-username" required>
-        </div>
-        <div class="input-group">
-          <label for="signup-email">Email</label>
-          <input type="email" id="signup-email" name="signup-email" required>
-        </div>
-        <div class="input-group">
-          <label for="signup-password">Password</label>
-          <input type="password" id="signup-password" name="signup-password" required>
-        </div>
-        <button type="submit" class="signup-button">Sign Up</button>
-      </form>
+      <div class="signup-content" id="signup" style="display: none;">
+        <h1>Sign Up</h1>
 
-      <p>Already have an account? <a href="#" class="login-link">Login</a></p>
-    </div>
-    <div class="forgot-password-content" id="forgot-password" style="display: none;">
-      <h1>Forgot Password</h1>
-      <form name="forgot" class="forgot-password-form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-        <div class="input-group">
-          <label for="forgot-email">Email</label>
-          <input type="email" id="forgot-email" name="forgot-email" required>
-        </div>
-        <button type="submit" class="forgot-password-button">Reset Password</button>
-      </form>
+        <form name="signup" class="signup-form" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+          <div class="input-group">
+            <label for="signup-username">Username</label>
+            <input type="text" id="signup-username" name="signup-username" required>
+          </div>
+          <div class="input-group">
+            <label for="signup-email">Email</label>
+            <input type="email" id="signup-email" name="signup-email" required>
+          </div>
+          <div class="input-group">
+            <label for="signup-password">Password</label>
+            <input type="password" id="signup-password" name="signup-password" required>
+          </div>
+          <button type="submit" class="signup-button">Sign Up</button>
+        </form>
+
+        <p>Already have an account? <a href="#" class="login-link">Login</a></p>
+      </div>
+
+      <div class="forgot-password-content" id="forgot-password" style="display: none;">
+        <h1>Forgot Password</h1>
+        <form name="forgot" class="forgot-password-form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+          <div class="input-group">
+            <label for="forgot-email">Email</label>
+            <input type="email" id="forgot-email" name="forgot-email" required>
+          </div>
+          <button type="submit" class="forgot-password-button">Reset Password</button>
+        </form>
+      </div>
     </div>
   </div>
   <script src="login_signup_script.js"></script>
@@ -111,46 +114,46 @@ session_start(); // Start the session
 
 <?php
 
-// // Check if the user is logging in
-// if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["login"])) {
-//     $username = $_POST["login-username"];
-//     $password = $_POST["login-password"];
+// Check if the user is logging in
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["login"])) {
+    $username = $_POST["login-username"];
+    $password = $_POST["login-password"];
 
-//     // Query the database to check for matching record
-//     $result = loginCustomer($username, $password);
+    // Query the database to check for matching record
+    $result = loginCustomer($username, $password);
 
-//     if ($result->num_rows == 1) {
-//         // Fetch the user ID and store it in a session variable
-//         $row = $result->fetch_assoc();
-//         $_SESSION["user_id"] = $row["CustomerID"];
+    if ($result->num_rows == 1) {
+        // Fetch the user ID and store it in a session variable
+        $row = $result->fetch_assoc();
+        $_SESSION["user_id"] = $row["CustomerID"];
 
-//         // Transfer items from the temporary session variable to the user's cart in the database
-//         if (isset($_SESSION['cart'])) {
-//             $userID = $_SESSION["user_id"];
-//             foreach ($_SESSION['cart'] as $item) {
-//                 $itemID = $item['ItemID'];
-//                 $itemName = $item['ItemName'];
-//                 $price = $item['Price'];
-//                 $imageURL = $item['ImageURL'];
-//                 // Add item to the user's cart in the database
-//                 tempToCart($userID, $itemID, $itemName, $price);
-//             }
-//             // Remove items from the temporary session variable
-//             unset($_SESSION['cart']);
-//         }
+        // Transfer items from the temporary session variable to the user's cart in the database
+        if (isset($_SESSION['cart'])) {
+            $userID = $_SESSION["user_id"];
+            foreach ($_SESSION['cart'] as $item) {
+                $itemID = $item['ItemID'];
+                $itemName = $item['ItemName'];
+                $price = $item['Price'];
+                $imageURL = $item['ImageURL'];
+                // Add item to the user's cart in the database
+                tempToCart($userID, $itemID, $itemName, $price);
+            }
+            // Remove items from the temporary session variable
+            unset($_SESSION['cart']);
+        }
 
-//         // Redirect to the main menu page or any other page
-//         header("Location: menu.php");
-//         exit();
-//     } else {
-//         // Set error message as a session variable
-//         $_SESSION["error"] = "Invalid username or password";
+        // Redirect to the main menu page or any other page
+        header("Location: menu.php");
+        exit();
+    } else {
+        // Set error message as a session variable
+        $_SESSION["error"] = "Invalid username or password";
 
-//         // Redirect back to the login page
-//         header("Location: signup.php");
-//         exit();
-//     }
-// }
+        // Redirect back to the login page
+        header("Location: signup.php");
+        exit();
+    }
+}
 
 // Check if the user is signing up
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["signup"])) {
@@ -160,11 +163,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["signup"])) {
 
     $result = createCustomer($user, $pass, $email, NULL, NULL);
 
-    if ($result) {
-        echo "<br>";
-        echo "Customer added successfully";
-    } else {
-        echo "Failed to add customer" . $conn->error;
-    }
 }
 ?>

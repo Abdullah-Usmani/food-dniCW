@@ -30,6 +30,10 @@ function createCustomer($user, $pass, $email, $name, $number) {
     $sql = "INSERT INTO Customer (Username, Password, Email, Name, PhoneNumber) VALUES (?, ?, ?, ?, ?)";
     $params = [$user, $pass, $email, $name, $number];
 
+        // Debugging: Display SQL query and parameters
+        echo "SQL: $sql<br>";
+        echo "Params: " . implode(", ", $params) . "<br>";
+        
     return execPreparedStatement($sql, $params);
 }
 function readCustomer() {
