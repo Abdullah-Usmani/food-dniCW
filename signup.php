@@ -111,46 +111,46 @@ session_start(); // Start the session
 
 <?php
 
-// Check if the user is logging in
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["login"])) {
-    $username = $_POST["login-username"];
-    $password = $_POST["login-password"];
+// // Check if the user is logging in
+// if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["login"])) {
+//     $username = $_POST["login-username"];
+//     $password = $_POST["login-password"];
 
-    // Query the database to check for matching record
-    $result = loginCustomer($username, $password);
+//     // Query the database to check for matching record
+//     $result = loginCustomer($username, $password);
 
-    if ($result->num_rows == 1) {
-        // Fetch the user ID and store it in a session variable
-        $row = $result->fetch_assoc();
-        $_SESSION["user_id"] = $row["CustomerID"];
+//     if ($result->num_rows == 1) {
+//         // Fetch the user ID and store it in a session variable
+//         $row = $result->fetch_assoc();
+//         $_SESSION["user_id"] = $row["CustomerID"];
 
-        // Transfer items from the temporary session variable to the user's cart in the database
-        if (isset($_SESSION['cart'])) {
-            $userID = $_SESSION["user_id"];
-            foreach ($_SESSION['cart'] as $item) {
-                $itemID = $item['ItemID'];
-                $itemName = $item['ItemName'];
-                $price = $item['Price'];
-                $imageURL = $item['ImageURL'];
-                // Add item to the user's cart in the database
-                tempToCart($userID, $itemID, $itemName, $price);
-            }
-            // Remove items from the temporary session variable
-            unset($_SESSION['cart']);
-        }
+//         // Transfer items from the temporary session variable to the user's cart in the database
+//         if (isset($_SESSION['cart'])) {
+//             $userID = $_SESSION["user_id"];
+//             foreach ($_SESSION['cart'] as $item) {
+//                 $itemID = $item['ItemID'];
+//                 $itemName = $item['ItemName'];
+//                 $price = $item['Price'];
+//                 $imageURL = $item['ImageURL'];
+//                 // Add item to the user's cart in the database
+//                 tempToCart($userID, $itemID, $itemName, $price);
+//             }
+//             // Remove items from the temporary session variable
+//             unset($_SESSION['cart']);
+//         }
 
-        // Redirect to the main menu page or any other page
-        header("Location: menu.php");
-        exit();
-    } else {
-        // Set error message as a session variable
-        $_SESSION["error"] = "Invalid username or password";
+//         // Redirect to the main menu page or any other page
+//         header("Location: menu.php");
+//         exit();
+//     } else {
+//         // Set error message as a session variable
+//         $_SESSION["error"] = "Invalid username or password";
 
-        // Redirect back to the login page
-        header("Location: signup.php");
-        exit();
-    }
-}
+//         // Redirect back to the login page
+//         header("Location: signup.php");
+//         exit();
+//     }
+// }
 
 // Check if the user is signing up
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["signup"])) {

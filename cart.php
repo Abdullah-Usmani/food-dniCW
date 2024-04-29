@@ -210,7 +210,6 @@ $totalAmount = 0;
       });
       
       function deleteOrder(OrderItemID) {
-        // Send an AJAX request to addToCart.php to remove the item from the cart
         const xhr = new XMLHttpRequest();
         const url = "removeFromCart.php";
         const params = `OrderItemID=${OrderItemID}`;

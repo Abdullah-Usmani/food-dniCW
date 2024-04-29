@@ -1,18 +1,31 @@
--- Active: 1712127514804@@127.0.0.1@3306@hungerstation
-
-CREATE DATABASE HungerStation
+-- Active: 1712127514804@@127.0.0.1@3306@desikitchen
+CREATE DATABASE DesiKitchen
     DEFAULT CHARACTER SET = 'utf8mb4';
 
-USE HungerStation;
+USE DesiKitchen;
 
--- FIX THE DIAGRAM, get rid of spaces in the ERD
--- Should add 'WHERE' checks, 
 -- Username must be more than 8 char
 -- Password must have Uppercase char, Number
--- Phone Number must be valid, 10 digit >
--- Phone Number must be valid, begins with 00
--- AGE MUST BE ABOVE 18, etc.
+-- Phone Number must be valid, 10 digit >, begins with 00
+-- email -> not null+unique, so no 2 users with the same email
+-- address -> null, can be set to null in the beginning
+-- phone number -> can be null, but must be unique, so no 2 users with the same number
 
+-- CREATE TABLE Customer (
+--     CustomerID INT PRIMARY KEY AUTO_INCREMENT,
+--     Username VARCHAR(30) NOT NULL UNIQUE CHECK (CHAR_LENGTH(Username) > 8),
+--     Password VARCHAR(30) NOT NULL CHECK (Password REGEXP '[A-Z]' AND Password REGEXP '[0-9]'),
+--     Email TEXT NOT NULL UNIQUE,
+--     Name TEXT,
+--     Address VARCHAR(50),
+--     PhoneNumber VARCHAR(15) UNIQUE CHECK (CHAR_LENGTH(PhoneNumber) > 9 AND PhoneNumber REGEXP '^[0-9]+$'),
+--     CONSTRAINT check_phone_number CHECK (PhoneNumber LIKE '00%')
+-- );
+
+DROP TABLE Customer;
+DROP TABLE Orders;
+DROP TABLE OrderItem;
+DROP TABLE Payment;
 CREATE TABLE Customer (
     CustomerID INT PRIMARY KEY AUTO_INCREMENT,
     Username VARCHAR(30) NOT NULL UNIQUE,
@@ -22,26 +35,18 @@ CREATE TABLE Customer (
     Address VARCHAR(50),
     PhoneNumber INT UNIQUE);
 
--- email -> not null+unique, phone number unique null
--- address -> null
-
--- Set Email column to NOT NULL and UNIQUE
--- ALTER TABLE Customer
--- MODIFY Email TEXT NOT NULL UNIQUE;
-
--- Set PhoneNumber column to UNIQUE and allow NULL values
--- ALTER TABLE Customer
--- MODIFY PhoneNumber INT UNIQUE;
-
--- Allow Address column to have NULL values
--- ALTER TABLE Customer
--- MODIFY Address VARCHAR(50);
---
+-- Menu Categories
 CREATE TABLE MenuCategory (
     CategoryID INT PRIMARY KEY AUTO_INCREMENT,
     CategoryName VARCHAR(30) NOT NULL DEFAULT 'Unspecified'
 );
 
+INSERT INTO MenuCategory (`CategoryName`) VALUES ('Appetizers'), ('Main Course'), ('Side Dishes'), ('Desserts'), ('Drinks');     
+-- Menu Items,
+-- NECESSARY DECLARATIONS: Name 30 char max, CategoryID, Price, AvailabilityStatus 
+-- Image URLs also stored, but not necessary
+-- Price defaults to 2.50, can be set differently
+-- AvailabilityStatus to be used in future, to show if items available or not, default to 0
 CREATE TABLE MenuItem (
     ItemID INT PRIMARY KEY AUTO_INCREMENT,
     CategoryID INT NOT NULL,
@@ -53,6 +58,7 @@ CREATE TABLE MenuItem (
     FOREIGN KEY (CategoryID) REFERENCES MenuCategory(CategoryID)
 );
 
+-- Sample data to fill the menu categories with items
 INSERT INTO `menuitem` (`ItemID`, `CategoryID`, `ItemName`, `Description`, `ImageURL`, `Price`, `AvailabilityStatus`) VALUES
 (1, 1, 'Greek Salad', 'A traditional Greek salad consists of sliced cucumbers, tomatoes, green bell pepper, red onion, olives, and feta cheese. ', 'https://www.foodandwine.com/thmb/q9tccMZgV9aifYtmlvh9qcPmb_8=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Greek-Salad-Romaine-FT-RECIPE1222-8a49c63ede714dfb8fdc0c35088fcd18.jpg', 10, 1),
 (2, 2, 'Pasta Carbonara', 'spaghetti (long thin strands of pasta) with bacon and a creamy sauce made from eggs, Pecorino or Parmesan and black pepper', 'https://www.adventuresofanurse.com/wp-content/uploads/2017/01/Pasta-Carbonara-Cheesecake-Factory-735x489.jpg', 30, 1),
@@ -81,8 +87,9 @@ INSERT INTO `menuitem` (`ItemID`, `CategoryID`, `ItemName`, `Description`, `Imag
 (26, 1, 'Football Fest Empanadas', 'Classic empanadas from South America are pastries stuffed with beef or chicken, usually fried. That doesn\'t mean \"classic\" never changes', 'https://www.tasteofhome.com/wp-content/uploads/2018/01/exps111455_TH2237243F10_13_4b_WEB-2.jpg?fit=700,700', 11, 1);
 
 
--- RENAME TABLE - can't use ORDER, changed to ORDERS NOW
--- OrderStatus = delivered yes/no
+-- Hold each order/cart. 
+-- Acts as a cart when OrderStatus == 0 and then OrderItems can be linked
+-- Acts as an order receipt when OrderStatus == 1
 CREATE TABLE Orders (
     OrderID INT PRIMARY KEY AUTO_INCREMENT,
     CustomerID INT NOT NULL,
@@ -92,7 +99,17 @@ CREATE TABLE Orders (
     FOREIGN KEY (CustomerID) REFERENCES Customer(CustomerID)
 );
 
+CREATE TABLE OrderItem (
+    OrderItemID INT PRIMARY KEY AUTO_INCREMENT,
+    OrderID INT NOT NULL,
+    ItemID INT NOT NULL,
+    FOREIGN KEY (OrderID) REFERENCES Orders(OrderID),
+    FOREIGN KEY (ItemID) REFERENCES MenuItem(ItemID)
+);
+
 -- Payment details
+-- Assign constraints accordingly to each field
+-- Check if CardNumber is valid, 
 CREATE TABLE Payment (
     PaymentID INT PRIMARY KEY AUTO_INCREMENT,
     OrderID INT NOT NULL,
@@ -105,16 +122,4 @@ CREATE TABLE Payment (
     CONSTRAINT check_numeric_only CHECK (CardNumber REGEXP '^[0-9]+$'),
     FOREIGN KEY (OrderID) REFERENCES Orders(OrderID),
     FOREIGN KEY (CustomerID) REFERENCES Customer(CustomerID)
-);
-
--- default price for items
--- RENAME to ITEM
--- ADD STOCK COLUMN, HOW MANY OF THESE ITEMS AVAILIABLE?
--- ITEMID ARROW IS MISSING TO FOREIGN KEY
-CREATE TABLE OrderItem (
-    OrderItemID INT PRIMARY KEY AUTO_INCREMENT,
-    OrderID INT NOT NULL,
-    ItemID INT NOT NULL,
-    FOREIGN KEY (OrderID) REFERENCES Orders(OrderID),
-    FOREIGN KEY (ItemID) REFERENCES MenuItem(ItemID)
 );

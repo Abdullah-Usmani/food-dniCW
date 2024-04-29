@@ -11,7 +11,7 @@ $userID = 0;
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Order Status</title>
-  <link rel="stylesheet" href="order-status.css">
+  <link rel="stylesheet" href="status.css">
   <style>
     /* Your existing CSS styles */
     header {
@@ -141,6 +141,6 @@ $userID = 0;
   }
   ?>
 
-  <script src="order-status.js"></script>
+  <script src="status.js"></script>
 </body>
 </html>
